@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Tabular Playground Series Mar 2022 | AnuragAnalog’s Notebooks</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Tabular Playground Series Mar 2022" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="FB Prophet Approach to TPS March 2022" />
+<meta property="og:description" content="FB Prophet Approach to TPS March 2022" />
+<link rel="canonical" href="https://anuraganalog.github.io/blog/kaggle/fbprophet/jupyter/tps/2022/03/24/Tabular-Playground-Series-Mar-2022-FB-Prophet.html" />
+<meta property="og:url" content="https://anuraganalog.github.io/blog/kaggle/fbprophet/jupyter/tps/2022/03/24/Tabular-Playground-Series-Mar-2022-FB-Prophet.html" />
+<meta property="og:site_name" content="AnuragAnalog’s Notebooks" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-03-24T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Tabular Playground Series Mar 2022" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-03-24T00:00:00-05:00","datePublished":"2022-03-24T00:00:00-05:00","description":"FB Prophet Approach to TPS March 2022","headline":"Tabular Playground Series Mar 2022","mainEntityOfPage":{"@type":"WebPage","@id":"https://anuraganalog.github.io/blog/kaggle/fbprophet/jupyter/tps/2022/03/24/Tabular-Playground-Series-Mar-2022-FB-Prophet.html"},"url":"https://anuraganalog.github.io/blog/kaggle/fbprophet/jupyter/tps/2022/03/24/Tabular-Playground-Series-Mar-2022-FB-Prophet.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://anuraganalog.github.io/blog/feed.xml" title="AnuragAnalog's Notebooks" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">AnuragAnalog&#39;s Notebooks</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Tabular Playground Series Mar 2022</h1><p class="page-description">FB Prophet Approach to TPS March 2022</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-03-24T00:00:00-05:00" itemprop="datePublished">
+        Mar 24, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      9 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#kaggle">kaggle</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#fbprophet">fbprophet</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#jupyter">jupyter</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#tps">tps</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/AnuragAnalog/blog/tree/main/_notebooks/2022-03-24-Tabular-Playground-Series-Mar-2022-FB-Prophet.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/AnuragAnalog/blog/main?filepath=_notebooks%2F2022-03-24-Tabular-Playground-Series-Mar-2022-FB-Prophet.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/AnuragAnalog/blog/blob/main/_notebooks/2022-03-24-Tabular-Playground-Series-Mar-2022-FB-Prophet.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2FAnuragAnalog%2Fblog%2Fblob%2Fmain%2F_notebooks%2F2022-03-24-Tabular-Playground-Series-Mar-2022-FB-Prophet.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/blog/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#Loading-the-data">Loading the data </a></li>
+<li class="toc-entry toc-h2"><a href="#Preparation">Preparation </a></li>
+<li class="toc-entry toc-h2"><a href="#Modelling">Modelling </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Approach-1">Approach-1 </a></li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022-03-24-Tabular-Playground-Series-Mar-2022-FB-Prophet.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">pip3</span> <span class="n">install</span> <span class="n">kaggle</span>
+<span class="err">!</span><span class="n">pip3</span> <span class="n">install</span> <span class="n">prophet</span>
+<span class="err">!</span><span class="n">pip3</span> <span class="n">install</span> <span class="n">pystan</span><span class="o">==</span><span class="mf">2.19</span><span class="o">.</span><span class="mf">1.1</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Requirement already satisfied: kaggle in /usr/local/lib/python3.7/dist-packages (1.5.12)
+Requirement already satisfied: six&gt;=1.10 in /usr/local/lib/python3.7/dist-packages (from kaggle) (1.15.0)
+Requirement already satisfied: requests in /usr/local/lib/python3.7/dist-packages (from kaggle) (2.23.0)
+Requirement already satisfied: python-slugify in /usr/local/lib/python3.7/dist-packages (from kaggle) (6.1.1)
+Requirement already satisfied: urllib3 in /usr/local/lib/python3.7/dist-packages (from kaggle) (1.24.3)
+Requirement already satisfied: tqdm in /usr/local/lib/python3.7/dist-packages (from kaggle) (4.63.0)
+Requirement already satisfied: python-dateutil in /usr/local/lib/python3.7/dist-packages (from kaggle) (2.8.2)
+Requirement already satisfied: certifi in /usr/local/lib/python3.7/dist-packages (from kaggle) (2021.10.8)
+Requirement already satisfied: text-unidecode&gt;=1.3 in /usr/local/lib/python3.7/dist-packages (from python-slugify-&gt;kaggle) (1.3)
+Requirement already satisfied: idna&lt;3,&gt;=2.5 in /usr/local/lib/python3.7/dist-packages (from requests-&gt;kaggle) (2.10)
+Requirement already satisfied: chardet&lt;4,&gt;=3.0.2 in /usr/local/lib/python3.7/dist-packages (from requests-&gt;kaggle) (3.0.4)
+Requirement already satisfied: prophet in /usr/local/lib/python3.7/dist-packages (1.0.1)
+Requirement already satisfied: pystan~=2.19.1.1 in /usr/local/lib/python3.7/dist-packages (from prophet) (2.19.1.1)
+Requirement already satisfied: numpy&gt;=1.15.4 in /usr/local/lib/python3.7/dist-packages (from prophet) (1.21.5)
+Requirement already satisfied: holidays&gt;=0.10.2 in /usr/local/lib/python3.7/dist-packages (from prophet) (0.10.5.2)
+Requirement already satisfied: pandas&gt;=1.0.4 in /usr/local/lib/python3.7/dist-packages (from prophet) (1.3.5)
+Requirement already satisfied: convertdate&gt;=2.1.2 in /usr/local/lib/python3.7/dist-packages (from prophet) (2.4.0)
+Requirement already satisfied: python-dateutil&gt;=2.8.0 in /usr/local/lib/python3.7/dist-packages (from prophet) (2.8.2)
+Requirement already satisfied: tqdm&gt;=4.36.1 in /usr/local/lib/python3.7/dist-packages (from prophet) (4.63.0)
+Requirement already satisfied: matplotlib&gt;=2.0.0 in /usr/local/lib/python3.7/dist-packages (from prophet) (3.2.2)
+Requirement already satisfied: cmdstanpy==0.9.68 in /usr/local/lib/python3.7/dist-packages (from prophet) (0.9.68)
+Requirement already satisfied: setuptools-git&gt;=1.2 in /usr/local/lib/python3.7/dist-packages (from prophet) (1.2)
+Requirement already satisfied: LunarCalendar&gt;=0.0.9 in /usr/local/lib/python3.7/dist-packages (from prophet) (0.0.9)
+Requirement already satisfied: Cython&gt;=0.22 in /usr/local/lib/python3.7/dist-packages (from prophet) (0.29.28)
+Requirement already satisfied: ujson in /usr/local/lib/python3.7/dist-packages (from cmdstanpy==0.9.68-&gt;prophet) (5.1.0)
+Requirement already satisfied: pymeeus&lt;=1,&gt;=0.3.13 in /usr/local/lib/python3.7/dist-packages (from convertdate&gt;=2.1.2-&gt;prophet) (0.5.11)
+Requirement already satisfied: korean-lunar-calendar in /usr/local/lib/python3.7/dist-packages (from holidays&gt;=0.10.2-&gt;prophet) (0.2.1)
+Requirement already satisfied: six in /usr/local/lib/python3.7/dist-packages (from holidays&gt;=0.10.2-&gt;prophet) (1.15.0)
+Requirement already satisfied: hijri-converter in /usr/local/lib/python3.7/dist-packages (from holidays&gt;=0.10.2-&gt;prophet) (2.2.3)
+Requirement already satisfied: pytz in /usr/local/lib/python3.7/dist-packages (from LunarCalendar&gt;=0.0.9-&gt;prophet) (2018.9)
+Requirement already satisfied: ephem&gt;=3.7.5.3 in /usr/local/lib/python3.7/dist-packages (from LunarCalendar&gt;=0.0.9-&gt;prophet) (4.1.3)
+Requirement already satisfied: kiwisolver&gt;=1.0.1 in /usr/local/lib/python3.7/dist-packages (from matplotlib&gt;=2.0.0-&gt;prophet) (1.4.0)
+Requirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,&gt;=2.0.1 in /usr/local/lib/python3.7/dist-packages (from matplotlib&gt;=2.0.0-&gt;prophet) (3.0.7)
+Requirement already satisfied: cycler&gt;=0.10 in /usr/local/lib/python3.7/dist-packages (from matplotlib&gt;=2.0.0-&gt;prophet) (0.11.0)
+Requirement already satisfied: typing-extensions in /usr/local/lib/python3.7/dist-packages (from kiwisolver&gt;=1.0.1-&gt;matplotlib&gt;=2.0.0-&gt;prophet) (3.10.0.2)
+Requirement already satisfied: pystan==2.19.1.1 in /usr/local/lib/python3.7/dist-packages (2.19.1.1)
+Requirement already satisfied: Cython!=0.25.1,&gt;=0.22 in /usr/local/lib/python3.7/dist-packages (from pystan==2.19.1.1) (0.29.28)
+Requirement already satisfied: numpy&gt;=1.7 in /usr/local/lib/python3.7/dist-packages (from pystan==2.19.1.1) (1.21.5)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">tqdm</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="kn">from</span> <span class="nn">zipfile</span> <span class="kn">import</span> <span class="n">ZipFile</span>
+<span class="kn">from</span> <span class="nn">prophet</span> <span class="kn">import</span> <span class="n">Prophet</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">'figure.figsize'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Before running the below cell, upload your kaggle token, to make sure an error doesn't popup.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">mkdir</span> <span class="o">~/.</span><span class="n">kaggle</span>
+<span class="err">!</span><span class="n">cp</span> <span class="n">kaggle</span><span class="o">.</span><span class="n">json</span> <span class="o">~/.</span><span class="n">kaggle</span><span class="o">/</span>
+<span class="err">!</span><span class="n">chmod</span> <span class="mi">600</span> <span class="o">~/.</span><span class="n">kaggle</span><span class="o">/</span><span class="n">kaggle</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>mkdir: cannot create directory ‘/root/.kaggle’: File exists
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">kaggle</span> <span class="n">competitions</span> <span class="n">download</span> <span class="o">-</span><span class="n">c</span> <span class="n">tabular</span><span class="o">-</span><span class="n">playground</span><span class="o">-</span><span class="n">series</span><span class="o">-</span><span class="n">mar</span><span class="o">-</span><span class="mi">2022</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>tabular-playground-series-mar-2022.zip: Skipping, found more recently modified local copy (use --force to force download)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">with</span> <span class="n">ZipFile</span><span class="p">(</span><span class="s1">'/content/tabular-playground-series-mar-2022.zip'</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">zf</span><span class="p">:</span>
+    <span class="n">zf</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="s1">'./'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Loading-the-data">
+<a class="anchor" href="#Loading-the-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Loading the data<a class="anchor-link" href="#Loading-the-data"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'train.csv'</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">'row_id'</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">'time'</span><span class="p">])</span>
+<span class="n">train</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+  <div id="df-79d0b816-61e9-4161-8fe3-392cad6834b1">
+    <div class="colab-df-container">
+      <div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>x</th>
+      <th>y</th>
+      <th>direction</th>
+      <th>congestion</th>
+    </tr>
+    <tr>
+      <th>row_id</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1991-04-01</td>
+      <td>0</td>
+      <td>0</td>
+      <td>EB</td>
+      <td>70</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1991-04-01</td>
+      <td>0</td>
+      <td>0</td>
+      <td>NB</td>
+      <td>49</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1991-04-01</td>
+      <td>0</td>
+      <td>0</td>
+      <td>SB</td>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1991-04-01</td>
+      <td>0</td>
+      <td>1</td>
+      <td>EB</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1991-04-01</td>
+      <td>0</td>
+      <td>1</td>
+      <td>NB</td>
+      <td>60</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-79d0b816-61e9-4161-8fe3-392cad6834b1')" title="Convert this dataframe to an interactive table." style="display:none;">
+        
+  &lt;svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px"&gt;
+    <path d="M0 0h24v24H0V0z" fill="none"></path>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"></path><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"></path>
+  &lt;/svg&gt;
+      </button>
+      
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-79d0b816-61e9-4161-8fe3-392cad6834b1 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-79d0b816-61e9-4161-8fe3-392cad6834b1');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+  
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">train</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="n">train</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;class 'pandas.core.frame.DataFrame'&gt;
+Int64Index: 848835 entries, 0 to 848834
+Data columns (total 5 columns):
+ #   Column      Non-Null Count   Dtype         
+---  ------      --------------   -----         
+ 0   time        848835 non-null  datetime64[ns]
+ 1   x           848835 non-null  int64         
+ 2   y           848835 non-null  int64         
+ 3   direction   848835 non-null  object        
+ 4   congestion  848835 non-null  int64         
+dtypes: datetime64[ns](1), int64(3), object(1)
+memory usage: 38.9+ MB
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+  <div id="df-f97898a2-b9f7-4160-8a42-4aff57e2c34e">
+    <div class="colab-df-container">
+      <div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>x</th>
+      <th>y</th>
+      <th>congestion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>848835.000000</td>
+      <td>848835.000000</td>
+      <td>848835.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>1.138462</td>
+      <td>1.630769</td>
+      <td>47.815305</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.801478</td>
+      <td>1.089379</td>
+      <td>16.799392</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>35.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>1.000000</td>
+      <td>2.000000</td>
+      <td>47.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>2.000000</td>
+      <td>3.000000</td>
+      <td>60.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>2.000000</td>
+      <td>3.000000</td>
+      <td>100.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-f97898a2-b9f7-4160-8a42-4aff57e2c34e')" title="Convert this dataframe to an interactive table." style="display:none;">
+        
+  &lt;svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px"&gt;
+    <path d="M0 0h24v24H0V0z" fill="none"></path>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"></path><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"></path>
+  &lt;/svg&gt;
+      </button>
+      
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-f97898a2-b9f7-4160-8a42-4aff57e2c34e button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-f97898a2-b9f7-4160-8a42-4aff57e2c34e');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+  
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'RdYlGn'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fa74ad97410&gt;</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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%0A">
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'test.csv'</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">'row_id'</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">'time'</span><span class="p">])</span>
+<span class="n">test</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+  <div id="df-1bf03b1f-b824-44b2-8495-57bfa8d304a3">
+    <div class="colab-df-container">
+      <div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>x</th>
+      <th>y</th>
+      <th>direction</th>
+    </tr>
+    <tr>
+      <th>row_id</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>848835</th>
+      <td>1991-09-30 12:00:00</td>
+      <td>0</td>
+      <td>0</td>
+      <td>EB</td>
+    </tr>
+    <tr>
+      <th>848836</th>
+      <td>1991-09-30 12:00:00</td>
+      <td>0</td>
+      <td>0</td>
+      <td>NB</td>
+    </tr>
+    <tr>
+      <th>848837</th>
+      <td>1991-09-30 12:00:00</td>
+      <td>0</td>
+      <td>0</td>
+      <td>SB</td>
+    </tr>
+    <tr>
+      <th>848838</th>
+      <td>1991-09-30 12:00:00</td>
+      <td>0</td>
+      <td>1</td>
+      <td>EB</td>
+    </tr>
+    <tr>
+      <th>848839</th>
+      <td>1991-09-30 12:00:00</td>
+      <td>0</td>
+      <td>1</td>
+      <td>NB</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-1bf03b1f-b824-44b2-8495-57bfa8d304a3')" title="Convert this dataframe to an interactive table." style="display:none;">
+        
+  &lt;svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px"&gt;
+    <path d="M0 0h24v24H0V0z" fill="none"></path>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"></path><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"></path>
+  &lt;/svg&gt;
+      </button>
+      
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-1bf03b1f-b824-44b2-8495-57bfa8d304a3 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-1bf03b1f-b824-44b2-8495-57bfa8d304a3');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+  
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There are no missing values, in the data.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">if</span> <span class="n">train</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"No Missing values"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>No Missing values
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Preparation">
+<a class="anchor" href="#Preparation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Preparation<a class="anchor-link" href="#Preparation"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">test</span><span class="p">[</span><span class="s1">'congestion'</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">grouped_train_data</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'time'</span><span class="p">,</span> <span class="s1">'x'</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">,</span> <span class="s1">'direction'</span><span class="p">])</span>
+<span class="n">grouped_test_data</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'time'</span><span class="p">,</span> <span class="s1">'x'</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">,</span> <span class="s1">'direction'</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">train_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="n">test_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">grouped_train_data</span><span class="p">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span> <span class="ow">in</span> <span class="n">train_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">train_dict</span><span class="p">[(</span><span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">'congestion'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">train_dict</span><span class="p">[(</span><span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])]</span> <span class="o">=</span> <span class="p">[(</span><span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">'congestion'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+
+<span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">grouped_test_data</span><span class="p">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span> <span class="ow">in</span> <span class="n">test_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">test_dict</span><span class="p">[(</span><span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">'congestion'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">test_dict</span><span class="p">[(</span><span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])]</span> <span class="o">=</span> <span class="p">[(</span><span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">'congestion'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">li</span> <span class="ow">in</span> <span class="n">train_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">train_dict</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'ds'</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">],</span> <span class="n">data</span><span class="o">=</span><span class="n">li</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">li</span> <span class="ow">in</span> <span class="n">test_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">test_dict</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'ds'</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">],</span> <span class="n">data</span><span class="o">=</span><span class="n">li</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">'y'</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Modelling">
+<a class="anchor" href="#Modelling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modelling<a class="anchor-link" href="#Modelling"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Approach-1">
+<a class="anchor" href="#Approach-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Approach-1<a class="anchor-link" href="#Approach-1"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this method, I have grouped the data into a number of instances and made the predictions on that instances.</p>
+<p>An instance is uniquely identifiable by its a key which is a combination of its cordinates and the direction.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">train_data</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="n">train_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Prophet</span><span class="p">()</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span>
+    <span class="n">forecast</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_dict</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+    <span class="n">test_dict</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="s1">'congestion'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">forecast</span><span class="p">[</span><span class="s1">'yhat'</span><span class="p">])</span>
+    <span class="n">test_dict</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="s1">'x'</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">test_dict</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="s1">'y'</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">test_dict</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="s1">'direction'</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>  0%|          | 0/65 [00:00&lt;?, ?it/s]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+  2%|▏         | 1/65 [00:08&lt;08:55,  8.36s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+  3%|▎         | 2/65 [00:12&lt;06:23,  6.09s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+  5%|▍         | 3/65 [00:20&lt;06:55,  6.70s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+  6%|▌         | 4/65 [00:29&lt;07:53,  7.76s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+  8%|▊         | 5/65 [00:36&lt;07:21,  7.37s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+  9%|▉         | 6/65 [00:41&lt;06:39,  6.77s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 11%|█         | 7/65 [00:48&lt;06:37,  6.85s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 12%|█▏        | 8/65 [00:55&lt;06:24,  6.75s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 14%|█▍        | 9/65 [01:00&lt;05:49,  6.24s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 15%|█▌        | 10/65 [01:06&lt;05:35,  6.10s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 17%|█▋        | 11/65 [01:11&lt;05:08,  5.71s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 18%|█▊        | 12/65 [01:16&lt;04:56,  5.60s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 20%|██        | 13/65 [01:24&lt;05:25,  6.25s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 22%|██▏       | 14/65 [01:28&lt;04:46,  5.63s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 23%|██▎       | 15/65 [01:34&lt;04:46,  5.72s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 25%|██▍       | 16/65 [01:39&lt;04:31,  5.55s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 26%|██▌       | 17/65 [01:45&lt;04:26,  5.55s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 28%|██▊       | 18/65 [01:51&lt;04:29,  5.74s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 29%|██▉       | 19/65 [01:57&lt;04:23,  5.72s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 31%|███       | 20/65 [02:02&lt;04:14,  5.65s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 32%|███▏      | 21/65 [02:06&lt;03:41,  5.03s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 34%|███▍      | 22/65 [02:11&lt;03:46,  5.26s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 35%|███▌      | 23/65 [02:18&lt;03:52,  5.54s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 37%|███▋      | 24/65 [02:21&lt;03:24,  4.99s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 38%|███▊      | 25/65 [02:28&lt;03:43,  5.58s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 40%|████      | 26/65 [02:37&lt;04:09,  6.40s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 42%|████▏     | 27/65 [02:44&lt;04:15,  6.72s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 43%|████▎     | 28/65 [02:51&lt;04:10,  6.78s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 45%|████▍     | 29/65 [02:56&lt;03:44,  6.24s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 46%|████▌     | 30/65 [03:02&lt;03:34,  6.14s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 48%|████▊     | 31/65 [03:08&lt;03:34,  6.29s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 49%|████▉     | 32/65 [03:14&lt;03:17,  5.99s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 51%|█████     | 33/65 [03:19&lt;03:07,  5.85s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 52%|█████▏    | 34/65 [03:23&lt;02:43,  5.28s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 54%|█████▍    | 35/65 [03:29&lt;02:39,  5.33s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 55%|█████▌    | 36/65 [03:35&lt;02:47,  5.76s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 57%|█████▋    | 37/65 [03:41&lt;02:41,  5.77s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 58%|█████▊    | 38/65 [03:46&lt;02:30,  5.57s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 60%|██████    | 39/65 [03:49&lt;02:04,  4.78s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 62%|██████▏   | 40/65 [03:55&lt;02:07,  5.12s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 63%|██████▎   | 41/65 [04:03&lt;02:24,  6.03s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 65%|██████▍   | 42/65 [04:10&lt;02:20,  6.10s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 66%|██████▌   | 43/65 [04:14&lt;02:03,  5.62s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 68%|██████▊   | 44/65 [04:21&lt;02:06,  6.01s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 69%|██████▉   | 45/65 [04:27&lt;02:01,  6.08s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 71%|███████   | 46/65 [04:32&lt;01:48,  5.70s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 72%|███████▏  | 47/65 [04:37&lt;01:39,  5.54s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 74%|███████▍  | 48/65 [04:42&lt;01:29,  5.29s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 75%|███████▌  | 49/65 [04:49&lt;01:34,  5.92s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 77%|███████▋  | 50/65 [04:55&lt;01:25,  5.69s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 78%|███████▊  | 51/65 [05:00&lt;01:17,  5.51s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 80%|████████  | 52/65 [05:04&lt;01:07,  5.20s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 82%|████████▏ | 53/65 [05:11&lt;01:08,  5.74s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 83%|████████▎ | 54/65 [05:17&lt;01:05,  5.93s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 85%|████████▍ | 55/65 [05:23&lt;00:57,  5.77s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 86%|████████▌ | 56/65 [05:28&lt;00:51,  5.73s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 88%|████████▊ | 57/65 [05:35&lt;00:48,  6.03s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 89%|████████▉ | 58/65 [05:40&lt;00:40,  5.78s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 91%|█████████ | 59/65 [05:46&lt;00:33,  5.58s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 92%|█████████▏| 60/65 [05:51&lt;00:28,  5.67s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 94%|█████████▍| 61/65 [05:55&lt;00:20,  5.05s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 95%|█████████▌| 62/65 [05:59&lt;00:14,  4.68s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 97%|█████████▋| 63/65 [06:04&lt;00:09,  4.79s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+ 98%|█████████▊| 64/65 [06:08&lt;00:04,  4.56s/it]INFO:prophet:Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+100%|██████████| 65/65 [06:11&lt;00:00,  5.72s/it]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">preds_semi_final</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">test_dict</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">preds_final</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">preds_semi_final</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="p">[</span><span class="s1">'time'</span><span class="p">,</span> <span class="s1">'x'</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">,</span> <span class="s1">'direction'</span><span class="p">],</span> <span class="n">right_on</span><span class="o">=</span><span class="p">[</span><span class="s1">'ds'</span><span class="p">,</span> <span class="s1">'x'</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">,</span> <span class="s1">'direction'</span><span class="p">])[[</span><span class="s1">'row_id'</span><span class="p">,</span> <span class="s1">'congestion_y'</span><span class="p">]]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">submission</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'/content/sample_submission.csv'</span><span class="p">)</span>
+<span class="n">submission</span> <span class="o">=</span> <span class="n">submission</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">preds_final</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">'row_id'</span><span class="p">)[[</span><span class="s1">'row_id'</span><span class="p">,</span> <span class="s1">'congestion_y'</span><span class="p">]]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">'congestion_y'</span><span class="p">:</span> <span class="s1">'congestion'</span><span class="p">})</span>
+<span class="n">submission</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'output.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">kaggle</span> <span class="n">competitions</span> <span class="n">submit</span> <span class="o">-</span><span class="n">c</span> <span class="n">tabular</span><span class="o">-</span><span class="n">playground</span><span class="o">-</span><span class="n">series</span><span class="o">-</span><span class="n">mar</span><span class="o">-</span><span class="mi">2022</span> <span class="o">-</span><span class="n">f</span> <span class="n">output</span><span class="o">.</span><span class="n">csv</span> <span class="o">-</span><span class="n">m</span> <span class="s2">"FB Prophet correct 2 with round"</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>100% 27.4k/27.4k [00:00&lt;00:00, 150kB/s]
+Successfully submitted to Tabular Playground Series - Mar 2022</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="AnuragAnalog/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/kaggle/fbprophet/jupyter/tps/2022/03/24/Tabular-Playground-Series-Mar-2022-FB-Prophet.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>My Jupyter Notebooks in the form of blog posts.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/AnuragAnalog" target="_blank" title="AnuragAnalog"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/anuragpeddi" target="_blank" title="anuragpeddi"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
