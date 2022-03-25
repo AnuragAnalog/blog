@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>https://anuraganalog.github.io/blog/markdown/2020/01/14/test-markdown-post.html</loc>
-<lastmod>2020-01-14T00:00:00-06:00</lastmod>
-</url>
-<url>
 <loc>https://anuraganalog.github.io/blog/datacamp/projects/sql/2020/01/25/Introduction-to-DataCamp-Projects.html</loc>
 <lastmod>2020-01-25T00:00:00-06:00</lastmod>
 </url>
 <url>
-<loc>https://anuraganalog.github.io/blog/jupyter/2020/02/20/test.html</loc>
-<lastmod>2020-02-20T00:00:00-06:00</lastmod>
+<loc>https://anuraganalog.github.io/blog/datacamp/projects/r/2020/03/01/Introduction-to-DataCamp-Projects.html</loc>
+<lastmod>2020-03-01T00:00:00-06:00</lastmod>
+</url>
+<url>
+<loc>https://anuraganalog.github.io/blog/datacamp/projects/r/2020/04/03/Visualizing-COVID-19.html</loc>
+<lastmod>2020-04-03T00:00:00-05:00</lastmod>
 </url>
 <url>
 <loc>https://anuraganalog.github.io/blog/kaggle/fbprophet/jupyter/tps/2022/03/24/Tabular-Playground-Series-Mar-2022-FB-Prophet.html</loc>
