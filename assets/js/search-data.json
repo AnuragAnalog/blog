@@ -434,16 +434,10 @@
   
 
   
-
   
 
   
-
-  
-  
-
-  
-      ,"page15": {
+      ,"page12": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "https://anuraganalog.github.io/blog/robots.txt",
