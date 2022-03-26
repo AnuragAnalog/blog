@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Writing Functions for Product Analysis | AnuragAnalog’s Notebooks</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Writing Functions for Product Analysis" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="DataCamp Project: Writing Functions for Product Analysis" />
+<meta property="og:description" content="DataCamp Project: Writing Functions for Product Analysis" />
+<link rel="canonical" href="https://anuraganalog.github.io/blog/datacamp/projects/python/2022/03/14/Writing-Functions-for-Product-Analysis.html" />
+<meta property="og:url" content="https://anuraganalog.github.io/blog/datacamp/projects/python/2022/03/14/Writing-Functions-for-Product-Analysis.html" />
+<meta property="og:site_name" content="AnuragAnalog’s Notebooks" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-03-14T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Writing Functions for Product Analysis" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-03-14T00:00:00-05:00","datePublished":"2022-03-14T00:00:00-05:00","description":"DataCamp Project: Writing Functions for Product Analysis","headline":"Writing Functions for Product Analysis","mainEntityOfPage":{"@type":"WebPage","@id":"https://anuraganalog.github.io/blog/datacamp/projects/python/2022/03/14/Writing-Functions-for-Product-Analysis.html"},"url":"https://anuraganalog.github.io/blog/datacamp/projects/python/2022/03/14/Writing-Functions-for-Product-Analysis.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://anuraganalog.github.io/blog/feed.xml" title="AnuragAnalog's Notebooks" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YHQ9QB159E"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YHQ9QB159E');
+</script>
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">AnuragAnalog&#39;s Notebooks</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Writing Functions for Product Analysis</h1><p class="page-description">DataCamp Project: Writing Functions for Product Analysis</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-03-14T00:00:00-05:00" itemprop="datePublished">
+        Mar 14, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      13 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#datacamp">datacamp</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#projects">projects</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#python">python</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/AnuragAnalog/blog/tree/master/_notebooks/2022-03-14-Writing-Functions-for-Product-Analysis.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/AnuragAnalog/blog/master?filepath=_notebooks%2F2022-03-14-Writing-Functions-for-Product-Analysis.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/AnuragAnalog/blog/blob/master/_notebooks/2022-03-14-Writing-Functions-for-Product-Analysis.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2FAnuragAnalog%2Fblog%2Fblob%2Fmaster%2F_notebooks%2F2022-03-14-Writing-Functions-for-Product-Analysis.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/blog/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#1.-DRY:-Don't-repeat-yourself">1. DRY: Don&#39;t repeat yourself </a></li>
+<li class="toc-entry toc-h2"><a href="#2.-Verifying-the-files-with-the-"with"-keyword">2. Verifying the files with the &quot;with&quot; keyword </a></li>
+<li class="toc-entry toc-h2"><a href="#3.-Putting-it-together-with-nested-functions">3. Putting it together with nested functions </a></li>
+<li class="toc-entry toc-h2"><a href="#4.-Detractors,-Passives,-and-Promoters">4. Detractors, Passives, and Promoters </a></li>
+<li class="toc-entry toc-h2"><a href="#5.-Applying-our-function-to-a-DataFrame">5. Applying our function to a DataFrame </a></li>
+<li class="toc-entry toc-h2"><a href="#6.-Calculating-the-Net-Promoter-Score">6. Calculating the Net Promoter Score </a></li>
+<li class="toc-entry toc-h2"><a href="#7.-Breaking-down-NPS-by-source">7. Breaking down NPS by source </a></li>
+<li class="toc-entry toc-h2"><a href="#8.-Adding-docstrings">8. Adding docstrings </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022-03-14-Writing-Functions-for-Product-Analysis.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered celltag_context">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="1.-DRY:-Don't-repeat-yourself">
+<a class="anchor" href="#1.-DRY:-Don't-repeat-yourself" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. DRY: Don't repeat yourself<a class="anchor-link" href="#1.-DRY:-Don't-repeat-yourself"> </a>
+</h2>
+<p><img src="https://assets.datacamp.com/production/project_1234/img/survey.png" style="float: center;" alt="A pictogram of a blood bag with blood donation written in it" width="100%"></p>
+<p>Have you ever started your data analysis and ended up with repetitive code? Our colleague Brenda who works as a Product Analyst, has found herself in this situation and has asked us for some help. She's written a script to pull Net Promotor Score (NPS) data from various sources. NPS works by asking <em>How likely is it that you would recommend our product to a friend or colleague?</em> with a rating scale of 0 to 10. Brenda has set up this NPS survey in various ways, including emails and pop-ups on the mobile app and website. To compile the data from the different sources, she's written the following code:</p>
+<pre><code class="py language-py"># Read the NPS email responses into a DataFrame
+email = pd.read_csv("datasets/2020Q4_nps_email.csv")
+# Add a column to record the source
+email['source'] = 'email'
+
+# Repeat for NPS mobile and web responses
+mobile = pd.read_csv("datasets/2020Q4_nps_mobile.csv")
+mobile['source'] = 'mobile'
+web = pd.read_csv("datasets/2020Q4_nps_web.csv")
+web['source'] = 'web'
+
+# Combine the DataFrames
+q4_nps = pd.concat([email,mobile,web])
+</code></pre>
+<p>This results in the DataFrame <code>q4_nps</code> that looks like this:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>response_date</code></th>
+<th><code>user_id</code></th>
+<th><code>nps_rating</code></th>
+<th><code>source</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>2020-10-29</td>
+<td>36742</td>
+<td>2</td>
+<td>email</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2020-11-26</td>
+<td>31851</td>
+<td>10</td>
+<td>email</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2020-10-27</td>
+<td>44299</td>
+<td>10</td>
+<td>email</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+<p>This code works, but it violates the Don't Repeat Yourself (DRY) programming principle. Brenda repeats the same code for email, mobile, and web, except with different variable names and file names. While it's often quicker to copy and paste, it makes it easier to introduce errors. For example, if you need to edit one of those lines, you have to do it in multiple places. Enter functions! Repeated code is a sign that we need functions. Let's write a function for Brenda.</p>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_sample_code">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Write a function that matches the docstring</span>
+<span class="k">def</span> <span class="nf">convert_csv_to_df</span><span class="p">(</span><span class="n">csv_name</span><span class="p">,</span> <span class="n">source_type</span><span class="p">):</span>
+    <span class="sd">""" Converts an NPS CSV into a DataFrame with a column for the source. </span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        csv_name (str): The name of the NPS CSV file.</span>
+<span class="sd">        source_type (str): The source of the NPS responses.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A DataFrame with the CSV data and a column, source.</span>
+<span class="sd">    """</span>   
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_name</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">'source'</span><span class="p">]</span> <span class="o">=</span> <span class="n">source_type</span>
+    <span class="k">return</span> <span class="n">df</span>
+
+<span class="c1"># Test the function on the mobile data </span>
+<span class="n">convert_csv_to_df</span><span class="p">(</span><span class="s2">"datasets/2020Q4_nps_mobile.csv"</span><span class="p">,</span> <span class="s2">"mobile"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>response_date</th>
+      <th>user_id</th>
+      <th>nps_rating</th>
+      <th>source</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-12-29</td>
+      <td>14178</td>
+      <td>3</td>
+      <td>mobile</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-10-29</td>
+      <td>33221</td>
+      <td>1</td>
+      <td>mobile</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-11-01</td>
+      <td>21127</td>
+      <td>10</td>
+      <td>mobile</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-12-07</td>
+      <td>42894</td>
+      <td>3</td>
+      <td>mobile</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-11-26</td>
+      <td>30501</td>
+      <td>5</td>
+      <td>mobile</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1796</th>
+      <td>2020-12-29</td>
+      <td>49529</td>
+      <td>3</td>
+      <td>mobile</td>
+    </tr>
+    <tr>
+      <th>1797</th>
+      <td>2020-12-24</td>
+      <td>23671</td>
+      <td>7</td>
+      <td>mobile</td>
+    </tr>
+    <tr>
+      <th>1798</th>
+      <td>2020-11-28</td>
+      <td>39954</td>
+      <td>7</td>
+      <td>mobile</td>
+    </tr>
+    <tr>
+      <th>1799</th>
+      <td>2020-12-19</td>
+      <td>21098</td>
+      <td>7</td>
+      <td>mobile</td>
+    </tr>
+    <tr>
+      <th>1800</th>
+      <td>2020-12-23</td>
+      <td>14919</td>
+      <td>7</td>
+      <td>mobile</td>
+    </tr>
+  </tbody>
+</table>
+<p>1801 rows × 4 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered celltag_context">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id='2.-Verifying-the-files-with-the-"with"-keyword'>
+<a class="anchor" href="#2.-Verifying-the-files-with-the-" with aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Verifying the files with the "with" keyword<a class="anchor-link" href="#2.-Verifying-the-files-with-the-%22with%22-keyword"> </a>
+</h2>
+<p>Excellent, we have a function that reads and cleans Brenda's CSVs precisely the way she needs! She can call this function in the future for as many different sources as she wants. Before we combine the NPS DataFrames, we want to add a function that verifies that the files inputted are valid. Each of these NPS dataset files should have three columns: <code>response_date</code>, <code>user_id</code>, <code>nps_rating</code>. Previously, Brenda would check this manually by opening each file. </p>
+<p>Let's write a function that uses the <strong>context manager</strong> <code>with open()</code> so that we properly close the files we open, <a href="https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files">even if an exception is raised</a>. If we don't use the <code>with</code> keyword with <code>open()</code> , we would need to call <code>close()</code> after we're done with the file. Even then, it's risky because an error might be raised before the <code>close()</code> functions are called. </p>
+<p>The function will return <code>True</code> if the file contains the right columns. Otherwise, it will return <code>False</code>. To test the function, we'll use <code>datasets/corrupted.csv</code> to simulate a corrupted invalid NPS file.</p>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_sample_code">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">check_csv</span><span class="p">(</span><span class="n">csv_name</span><span class="p">):</span>
+    <span class="sd">""" Checks if a CSV has three columns: response_date, user_id, nps_rating</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        csv_name (str): The name of the CSV file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Boolean: True if the CSV is valid, False otherwise </span>
+<span class="sd">    """</span>
+    <span class="c1"># Open csv_name as f using with open</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">csv_name</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">first_line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+        <span class="c1"># Return true if the CSV has the three specified columns</span>
+        <span class="k">if</span> <span class="n">first_line</span> <span class="o">==</span> <span class="s2">"response_date,user_id,nps_rating</span><span class="se">\n</span><span class="s2">"</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="c1"># Otherwise, return false    </span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+<span class="c1"># Test the function on a corrupted NPS file</span>
+<span class="n">check_csv</span><span class="p">(</span><span class="s1">'datasets/corrupted.csv'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>False</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered celltag_context">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3.-Putting-it-together-with-nested-functions">
+<a class="anchor" href="#3.-Putting-it-together-with-nested-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Putting it together with nested functions<a class="anchor-link" href="#3.-Putting-it-together-with-nested-functions"> </a>
+</h2>
+<p>Alright, we now have one function that verifies that the CSVs are valid and another that converts them into the DataFrame format needed by Brenda. What's left? Looking at the script, this is the last line we haven't covered: <code>q4_nps = pd.concat([email,mobile,web])</code>. We could use this line of code, but we'll see more code repetition if we get CSVs from other sources or time periods.</p>
+<p>To make sure our code is scalable, we're going to write a function called <code>combine_nps_csvs()</code> that takes in a dictionary. Python dictionaries have key:value pairs. In our case, the CSV's name and source type will be the key and value, respectively. That way, we can define a dictionary with as many NPS files as we have and run it through <code>combine_nps_csvs()</code>. For each file, we'll check that it's valid using <code>check_csv()</code>, and if it is, we'll use <code>convert_csv_to_df()</code> to convert it into a DataFrame. At the start of the function, we'll define an empty DataFrame called <code>combined</code> and everytime a CSV is succesfully converted, we'll concatenate it to <code>combined</code>.</p>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_sample_code">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">combine_nps_csvs</span><span class="p">(</span><span class="n">csvs_dict</span><span class="p">):</span>
+    <span class="c1"># Define combine as an empty DataFrame</span>
+    <span class="n">combined</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="c1"># Iterate over csvs_dict to get the name and source of the CSVs</span>
+    <span class="k">for</span> <span class="n">fname</span><span class="p">,</span> <span class="n">source</span> <span class="ow">in</span> <span class="n">csvs_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="c1"># Check if the csv is valid using check_csv()</span>
+        <span class="k">if</span> <span class="n">check_csv</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+            <span class="c1"># Convert the CSV using convert_csv_to_df() and assign it to temp</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">convert_csv_to_df</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
+            <span class="c1"># Concatenate combined and temp and assign it to combined</span>
+            <span class="n">combined</span> <span class="o">=</span> <span class="n">combined</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+        <span class="c1"># If the file is not valid, print a message with the CSV's name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">fname</span> <span class="o">+</span> <span class="s2">" is not a valid file and will not be added."</span><span class="p">)</span>
+    <span class="c1"># Return the combined DataFrame</span>
+    <span class="k">return</span> <span class="n">combined</span>
+
+<span class="n">my_files</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">"datasets/2020Q4_nps_email.csv"</span><span class="p">:</span> <span class="s2">"email"</span><span class="p">,</span>
+  <span class="s2">"datasets/2020Q4_nps_mobile.csv"</span><span class="p">:</span> <span class="s2">"mobile"</span><span class="p">,</span>
+  <span class="s2">"datasets/2020Q4_nps_web.csv"</span><span class="p">:</span> <span class="s2">"web"</span><span class="p">,</span>
+  <span class="s2">"datasets/corrupted.csv"</span><span class="p">:</span> <span class="s2">"social_media"</span>
+<span class="p">}</span>
+
+<span class="c1"># Test the function on the my_files dictionary </span>
+<span class="n">combine_nps_csvs</span><span class="p">(</span><span class="n">my_files</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>datasets/corrupted.csv is not a valid file and will not be added.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>response_date</th>
+      <th>user_id</th>
+      <th>nps_rating</th>
+      <th>source</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-11-06</td>
+      <td>11037</td>
+      <td>7</td>
+      <td>email</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-12-24</td>
+      <td>34434</td>
+      <td>9</td>
+      <td>email</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-12-03</td>
+      <td>49547</td>
+      <td>8</td>
+      <td>email</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-10-04</td>
+      <td>13821</td>
+      <td>7</td>
+      <td>email</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-10-23</td>
+      <td>29407</td>
+      <td>9</td>
+      <td>email</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2285</th>
+      <td>2020-12-25</td>
+      <td>10656</td>
+      <td>8</td>
+      <td>web</td>
+    </tr>
+    <tr>
+      <th>2286</th>
+      <td>2020-11-07</td>
+      <td>32918</td>
+      <td>10</td>
+      <td>web</td>
+    </tr>
+    <tr>
+      <th>2287</th>
+      <td>2020-10-16</td>
+      <td>15667</td>
+      <td>10</td>
+      <td>web</td>
+    </tr>
+    <tr>
+      <th>2288</th>
+      <td>2020-11-20</td>
+      <td>47153</td>
+      <td>7</td>
+      <td>web</td>
+    </tr>
+    <tr>
+      <th>2289</th>
+      <td>2020-10-17</td>
+      <td>47071</td>
+      <td>5</td>
+      <td>web</td>
+    </tr>
+  </tbody>
+</table>
+<p>6043 rows × 4 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered celltag_context">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="4.-Detractors,-Passives,-and-Promoters">
+<a class="anchor" href="#4.-Detractors,-Passives,-and-Promoters" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. Detractors, Passives, and Promoters<a class="anchor-link" href="#4.-Detractors,-Passives,-and-Promoters"> </a>
+</h2>
+<p>We've summarized our colleague's script into one function: <code>combine_nps_csvs()</code>! Let's move on to analyzing the NPS data, such as actually calculating NPS. As a reminder, NPS works by asking <em>How likely is it that you would recommend our product to a friend or colleague?</em> with a rating scale of 0 to 10.</p>
+<p>NPS ratings are categorized into three groups. Ratings between 0 to 6 are <strong>detractors</strong>, ratings between 7 to 8 are <strong>passives</strong>, and finally, ratings 9 to 10 are <strong>promoters</strong>. There's more to analyzing NPS, but remember, functions should be small in scope and should just "do one thing". So before we get ahead of ourselves, let's write a simple function that takes an NPS rating and categorizes it into the appropriate group.</p>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_sample_code">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">categorize_nps</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">""" </span>
+<span class="sd">    Takes a NPS rating and outputs whether it is a "promoter", </span>
+<span class="sd">    "passive", "detractor", or "invalid" rating. "invalid" is</span>
+<span class="sd">    returned when the rating is not between 0-10.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        x: The NPS rating</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        String: the NPS category or "invalid".</span>
+<span class="sd">    """</span>
+    <span class="c1"># Write the rest of the function to match the docstring</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">7</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"detractor"</span>
+    <span class="k">elif</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">7</span> <span class="ow">and</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">9</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"passive"</span>
+    <span class="k">elif</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">9</span> <span class="ow">and</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">11</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"promoter"</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"invalid"</span>
+
+<span class="c1"># Test the function </span>
+<span class="n">categorize_nps</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'passive'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered celltag_context">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="5.-Applying-our-function-to-a-DataFrame">
+<a class="anchor" href="#5.-Applying-our-function-to-a-DataFrame" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. Applying our function to a DataFrame<a class="anchor-link" href="#5.-Applying-our-function-to-a-DataFrame"> </a>
+</h2>
+<p>So we have a function that takes a score and outputs which NPS response group it belongs to. It would be great to have this as a column in our NPS DataFrames, similar to the <code>source</code> column we added. Since we've modularized our code with functions, all we need to do is edit our <code>convert_cvs_to_df()</code> function and nest <code>categorize_nps()</code> into it. However, the way we'll nest <code>categorize_nps()</code> will be different than previous times. The <code>pandas</code> library has a handy function called <code>apply()</code>, which lets us apply a function to each column or row of a DataFrame. </p>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_sample_code">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">convert_csv_to_df</span><span class="p">(</span><span class="n">csv_name</span><span class="p">,</span> <span class="n">source_type</span><span class="p">):</span>    
+    <span class="sd">""" Convert an NPS CSV into a DataFrame with columns for the source and NPS group.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        csv_name (str): The name of the NPS CSV file.</span>
+<span class="sd">        source_type (str): The source of the NPS responses.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">         A DataFrame with the CSV data and columns: source and nps_group.</span>
+<span class="sd">    """</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_name</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">'source'</span><span class="p">]</span> <span class="o">=</span> <span class="n">source_type</span>
+    <span class="c1"># Define a new column nps_group which applies categorize_nps to nps_rating</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">'nps_group'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'nps_rating'</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">categorize_nps</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span>
+
+<span class="c1"># Test the updated function with mobile data</span>
+<span class="n">convert_csv_to_df</span><span class="p">(</span><span class="s2">"datasets/2020Q4_nps_mobile.csv"</span><span class="p">,</span> <span class="s2">"mobile"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>response_date</th>
+      <th>user_id</th>
+      <th>nps_rating</th>
+      <th>source</th>
+      <th>nps_group</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-12-29</td>
+      <td>14178</td>
+      <td>3</td>
+      <td>mobile</td>
+      <td>detractor</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-10-29</td>
+      <td>33221</td>
+      <td>1</td>
+      <td>mobile</td>
+      <td>detractor</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-11-01</td>
+      <td>21127</td>
+      <td>10</td>
+      <td>mobile</td>
+      <td>promoter</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-12-07</td>
+      <td>42894</td>
+      <td>3</td>
+      <td>mobile</td>
+      <td>detractor</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-11-26</td>
+      <td>30501</td>
+      <td>5</td>
+      <td>mobile</td>
+      <td>detractor</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1796</th>
+      <td>2020-12-29</td>
+      <td>49529</td>
+      <td>3</td>
+      <td>mobile</td>
+      <td>detractor</td>
+    </tr>
+    <tr>
+      <th>1797</th>
+      <td>2020-12-24</td>
+      <td>23671</td>
+      <td>7</td>
+      <td>mobile</td>
+      <td>passive</td>
+    </tr>
+    <tr>
+      <th>1798</th>
+      <td>2020-11-28</td>
+      <td>39954</td>
+      <td>7</td>
+      <td>mobile</td>
+      <td>passive</td>
+    </tr>
+    <tr>
+      <th>1799</th>
+      <td>2020-12-19</td>
+      <td>21098</td>
+      <td>7</td>
+      <td>mobile</td>
+      <td>passive</td>
+    </tr>
+    <tr>
+      <th>1800</th>
+      <td>2020-12-23</td>
+      <td>14919</td>
+      <td>7</td>
+      <td>mobile</td>
+      <td>passive</td>
+    </tr>
+  </tbody>
+</table>
+<p>1801 rows × 5 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered celltag_context">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="6.-Calculating-the-Net-Promoter-Score">
+<a class="anchor" href="#6.-Calculating-the-Net-Promoter-Score" aria-hidden="true"><span class="octicon octicon-link"></span></a>6. Calculating the Net Promoter Score<a class="anchor-link" href="#6.-Calculating-the-Net-Promoter-Score"> </a>
+</h2>
+<p>If we hadn't broken down our code into functions earlier, we would've had to edit our code in multiple places to add a <code>nps_group</code> column, increasing the chance of introducing errors. It also helps that our functions have one responsibility keeping our code flexible and easier to edit and debug.</p>
+<p>Now we're in a good place to calculate the Net Promoter Score! This is calculated by subtracting the percentage of detractor ratings from the percentage of promoter ratings, in other words:</p>
+<p>$
+NPS = \frac{\text{# of Promoter Rating - # of Detractor Ratings}}{\text{Total # of Respondents}} * 100
+$</p>
+<p>We want to calculate the NPS across all sources, so we'll use <code>combine_nps_csvs()</code> from Task 3 to consolidate the source files. As expected, that will output a DataFrame which we'll use as an input for a new function we're going to write, <code>calculate_nps()</code>. </p>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_sample_code">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">calculate_nps</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="c1"># Calculate the NPS score using the nps_group column </span>
+    <span class="n">ratings</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'nps_group'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+    <span class="n">nps</span> <span class="o">=</span> <span class="p">(</span><span class="n">ratings</span><span class="p">[</span><span class="s1">'promoter'</span><span class="p">]</span> <span class="o">-</span> <span class="n">ratings</span><span class="p">[</span><span class="s1">'detractor'</span><span class="p">])</span> <span class="o">/</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="c1"># Return the NPS Score</span>
+    <span class="k">return</span> <span class="n">nps</span>
+
+<span class="n">my_files</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">"datasets/2020Q4_nps_email.csv"</span><span class="p">:</span> <span class="s2">"email"</span><span class="p">,</span>
+  <span class="s2">"datasets/2020Q4_nps_web.csv"</span><span class="p">:</span> <span class="s2">"web"</span><span class="p">,</span>
+  <span class="s2">"datasets/2020Q4_nps_mobile.csv"</span><span class="p">:</span> <span class="s2">"mobile"</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># Test the function on the my_files dictionary</span>
+<span class="n">q4_nps</span> <span class="o">=</span> <span class="n">combine_nps_csvs</span><span class="p">(</span><span class="n">my_files</span><span class="p">)</span>
+<span class="n">calculate_nps</span><span class="p">(</span><span class="n">q4_nps</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>9.995035578355122</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered celltag_context">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="7.-Breaking-down-NPS-by-source">
+<a class="anchor" href="#7.-Breaking-down-NPS-by-source" aria-hidden="true"><span class="octicon octicon-link"></span></a>7. Breaking down NPS by source<a class="anchor-link" href="#7.-Breaking-down-NPS-by-source"> </a>
+</h2>
+<p>Is it good to have an NPS score around 10? The worst NPS score you can get is -100 when all respondents are detractors, and the best is 100 when all respondents are promoters. Depending on the industry of your service or product, average NPS scores vary a lot. However, a negative score is a bad sign because it means you have more unhappy customers than happy customers. Typically, a score over 50 is considered excellent, and above 75 is considered best in class.</p>
+<p>Although our score is above 0, it's still on the lower end of the spectrum. The product team concludes that majorly increasing NPS across our customer base is a priority. Luckily, we have this NPS data that we can analyze more so we can find data-driven solutions. A good start would be breaking down the NPS score by the source type. For instance, if people are rating lower on the web than mobile, that's some evidence we need to improve the browser experience.</p>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_sample_code">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">calculate_nps_by_source</span><span class="p">(</span><span class="n">nps_df</span><span class="p">):</span>
+    <span class="c1"># Group the DataFrame by source and apply calculate_nps()</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">nps_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'source'</span><span class="p">])</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">calculate_nps</span><span class="p">)</span>
+    <span class="c1"># Return a series with the NPS scores broken by source</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+
+<span class="n">my_files</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">"datasets/2020Q4_nps_email.csv"</span><span class="p">:</span> <span class="s2">"email"</span><span class="p">,</span>
+  <span class="s2">"datasets/2020Q4_nps_web.csv"</span><span class="p">:</span> <span class="s2">"web"</span><span class="p">,</span>
+  <span class="s2">"datasets/2020Q4_nps_mobile.csv"</span><span class="p">:</span> <span class="s2">"mobile"</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># Test the function on the my_files dictionary</span>
+<span class="n">q4_nps</span> <span class="o">=</span> <span class="n">combine_nps_csvs</span><span class="p">(</span><span class="n">my_files</span><span class="p">)</span>
+<span class="n">calculate_nps_by_source</span><span class="p">(</span><span class="n">q4_nps</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>source
+email     18.596311
+mobile   -14.714048
+web       22.096070
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered celltag_context">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="8.-Adding-docstrings">
+<a class="anchor" href="#8.-Adding-docstrings" aria-hidden="true"><span class="octicon octicon-link"></span></a>8. Adding docstrings<a class="anchor-link" href="#8.-Adding-docstrings"> </a>
+</h2>
+<p>Interesting! The mobile responses have an NPS score of about -15, which is noticeably lower than the other two sources. There are few ways we could continue our analysis from here. We could use the column <code>user_id</code> to reach out to users who rated poorly on the mobile app for user interviews. We could also breakdown NPS by source and date to see if there was a date where NPS started clearly decreasing - perhaps the same time there was a bug or feature realeased. With the functions we created, Brenda is in a good place to continue this work!</p>
+<p>The last thing we'll discuss is docstrings. In Task 1, 2, 4 and 5, we included docstrings for <code>convert_csv_to_df()</code>, <code>check_csv()</code>, and <code>categorize_nps()</code>. However, we should include docstrings for all the functions we write so that others can better re-use and maintain our code. Docstrings tell readers what a function does, its arguments, its return value(s) if any, and any other useful information you want to include, like error handling. There are several standards for writing docstrings in Python, including: <a href="https://numpydoc.readthedocs.io/en/latest/format.html">Numpydoc</a>, <a href="https://google.github.io/styleguide/pyguide.html">Google-style</a> (chosen style in this notebook), and <a href="https://www.python.org/dev/peps/pep-0287/">reStructuredText</a>.</p>
+<p>To make sure Brenda and other colleagues can follow our work, we are going to add docstrings to the remaining undocumented functions: <code>combine_nps_csvs()</code>, <code>calculate_nps()</code>, and <code>calculate_nps_by_source</code>. It's up to you how you want to write the docstrings - we'll only check that a docstring exists for each of these functions. </p>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_sample_code">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">combine_nps_csvs</span><span class="p">(</span><span class="n">csvs_dict</span><span class="p">):</span>
+    <span class="c1"># Add docstring</span>
+    <span class="sd">"""</span>
+<span class="sd">    Takes a dictonary of csvs and concatenates it.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    csvs_dict : dict</span>
+<span class="sd">        dictionary of csv filenames</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    combined : DataFrame</span>
+<span class="sd">        combined Dataframe</span>
+<span class="sd">    """</span>
+
+    <span class="c1"># Define combine as an empty DataFrame</span>
+    <span class="n">combined</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="c1"># Iterate over csvs_dict to get the name and source of the CSVs</span>
+    <span class="k">for</span> <span class="n">fname</span><span class="p">,</span> <span class="n">source</span> <span class="ow">in</span> <span class="n">csvs_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="c1"># Check if the csv is valid using check_csv()</span>
+        <span class="k">if</span> <span class="n">check_csv</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+            <span class="c1"># Convert the CSV using convert_csv_to_df() and assign it to temp</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">convert_csv_to_df</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
+            <span class="c1"># Concatenate combined and temp and assign it to combined</span>
+            <span class="n">combined</span> <span class="o">=</span> <span class="n">combined</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+        <span class="c1"># If the file is not valid, print a message with the CSV's name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">fname</span> <span class="o">+</span> <span class="s2">" is not a valid file and will not be added."</span><span class="p">)</span>
+    <span class="c1"># Return the combined DataFrame</span>
+    <span class="k">return</span> <span class="n">combined</span>
+
+<span class="c1"># Copy and paste your code for the function from Task 6</span>
+<span class="k">def</span> <span class="nf">calculate_nps</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="c1"># Add Docstring</span>
+    <span class="sd">"""</span>
+<span class="sd">    Calculates the net promotor score</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : DataFrame</span>
+<span class="sd">        The Dataframe which contains all the values</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    score : float</span>
+<span class="sd">        Net Promotor score value</span>
+<span class="sd">    """</span>
+
+    <span class="c1"># Calculate the NPS score using the nps_group column </span>
+    <span class="n">score</span> <span class="o">=</span> <span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s1">'nps_group'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'promoters'</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">-</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'nps_group'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'detractors'</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="c1"># Return the NPS Score</span>
+    <span class="k">return</span> <span class="n">score</span>
+
+<span class="c1"># Copy and paste your code for the function from Task 7</span>
+<span class="k">def</span> <span class="nf">calculate_nps_by_source</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="c1"># Add Docstring</span>
+    <span class="sd">"""</span>
+<span class="sd">    Calculates the nps score by grouping</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : DataFrame</span>
+<span class="sd">        Dataframe which contains all the values</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    nps_scores : DataFrame</span>
+<span class="sd">        Grouped NPS Score</span>
+<span class="sd">    """</span>
+    <span class="c1"># Group the DataFrame by source and apply calculate_nps()</span>
+    <span class="n">nps_scores</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'source'</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">calculate_nps</span><span class="p">)</span>
+    <span class="c1"># Return a Series with the NPS scores broken by source</span>
+    <span class="k">return</span> <span class="n">nps_scores</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="AnuragAnalog/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/datacamp/projects/python/2022/03/14/Writing-Functions-for-Product-Analysis.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>My Jupyter Notebooks in the form of blog posts.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/AnuragAnalog" target="_blank" title="AnuragAnalog"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.instagram.com/anurag.peddi" target="_blank" title="anurag.peddi"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#instagram"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/peddi-anurag-01767a166" target="_blank" title="peddi-anurag-01767a166"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://twitter.com/anuragpeddi" target="_blank" title="anuragpeddi"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

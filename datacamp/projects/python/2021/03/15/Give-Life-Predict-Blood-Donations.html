@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Give Life, Predict Blood Donations | AnuragAnalog’s Notebooks</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Give Life, Predict Blood Donations" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="DataCamp Project: Give Life, Predicting Blood Donations" />
+<meta property="og:description" content="DataCamp Project: Give Life, Predicting Blood Donations" />
+<link rel="canonical" href="https://anuraganalog.github.io/blog/datacamp/projects/python/2021/03/15/Give-Life-Predict-Blood-Donations.html" />
+<meta property="og:url" content="https://anuraganalog.github.io/blog/datacamp/projects/python/2021/03/15/Give-Life-Predict-Blood-Donations.html" />
+<meta property="og:site_name" content="AnuragAnalog’s Notebooks" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-03-15T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Give Life, Predict Blood Donations" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2021-03-15T00:00:00-05:00","datePublished":"2021-03-15T00:00:00-05:00","description":"DataCamp Project: Give Life, Predicting Blood Donations","headline":"Give Life, Predict Blood Donations","mainEntityOfPage":{"@type":"WebPage","@id":"https://anuraganalog.github.io/blog/datacamp/projects/python/2021/03/15/Give-Life-Predict-Blood-Donations.html"},"url":"https://anuraganalog.github.io/blog/datacamp/projects/python/2021/03/15/Give-Life-Predict-Blood-Donations.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://anuraganalog.github.io/blog/feed.xml" title="AnuragAnalog's Notebooks" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YHQ9QB159E"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YHQ9QB159E');
+</script>
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">AnuragAnalog&#39;s Notebooks</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Give Life, Predict Blood Donations</h1><p class="page-description">DataCamp Project: Give Life, Predicting Blood Donations</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-03-15T00:00:00-05:00" itemprop="datePublished">
+        Mar 15, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      8 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#datacamp">datacamp</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#projects">projects</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#python">python</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/AnuragAnalog/blog/tree/master/_notebooks/2021-03-15-Give-Life-Predict-Blood-Donations.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/AnuragAnalog/blog/master?filepath=_notebooks%2F2021-03-15-Give-Life-Predict-Blood-Donations.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/AnuragAnalog/blog/blob/master/_notebooks/2021-03-15-Give-Life-Predict-Blood-Donations.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2FAnuragAnalog%2Fblog%2Fblob%2Fmaster%2F_notebooks%2F2021-03-15-Give-Life-Predict-Blood-Donations.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/blog/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#1.-Inspecting-transfusion.data-file">1. Inspecting transfusion.data file </a></li>
+<li class="toc-entry toc-h2"><a href="#2.-Loading-the-blood-donations-data">2. Loading the blood donations data </a></li>
+<li class="toc-entry toc-h2"><a href="#3.-Inspecting-transfusion-DataFrame">3. Inspecting transfusion DataFrame </a></li>
+<li class="toc-entry toc-h2"><a href="#4.-Creating-target-column">4. Creating target column </a></li>
+<li class="toc-entry toc-h2"><a href="#5.-Checking-target-incidence">5. Checking target incidence </a></li>
+<li class="toc-entry toc-h2"><a href="#6.-Splitting-transfusion-into-train-and-test-datasets">6. Splitting transfusion into train and test datasets </a></li>
+<li class="toc-entry toc-h2"><a href="#7.-Selecting-model-using-TPOT">7. Selecting model using TPOT </a></li>
+<li class="toc-entry toc-h2"><a href="#8.-Checking-the-variance">8. Checking the variance </a></li>
+<li class="toc-entry toc-h2"><a href="#9.-Log-normalization">9. Log normalization </a></li>
+<li class="toc-entry toc-h2"><a href="#10.-Training-the-logistic-regression-model">10. Training the logistic regression model </a></li>
+<li class="toc-entry toc-h2"><a href="#11.-Conclusion">11. Conclusion </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-03-15-Give-Life-Predict-Blood-Donations.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered celltag_context">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="1.-Inspecting-transfusion.data-file">
+<a class="anchor" href="#1.-Inspecting-transfusion.data-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Inspecting transfusion.data file<a class="anchor-link" href="#1.-Inspecting-transfusion.data-file"> </a>
+</h2>
+<p><img src="https://assets.datacamp.com/production/project_646/img/blood_donation.png" style="float: right;" alt="A pictogram of a blood bag with blood donation written in it" width="200"></p>
+<p>Blood transfusion saves lives - from replacing lost blood during major surgery or a serious injury to treating various illnesses and blood disorders. Ensuring that there's enough blood in supply whenever needed is a serious challenge for the health professionals. According to <a href="https://www.webmd.com/a-to-z-guides/blood-transfusion-what-to-know#1">WebMD</a>, "about 5 million Americans need a blood transfusion every year".</p>
+<p>Our dataset is from a mobile blood donation vehicle in Taiwan. The Blood Transfusion Service Center drives to different universities and collects blood as part of a blood drive. We want to predict whether or not a donor will give blood the next time the vehicle comes to campus.</p>
+<p>The data is stored in <code>datasets/transfusion.data</code> and it is structured according to RFMTC marketing model (a variation of RFM). We'll explore what that means later in this notebook. First, let's inspect the data.</p>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_sample_code">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>head -5 datasets/transfusion.data
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+
+
+
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered celltag_context">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="2.-Loading-the-blood-donations-data">
+<a class="anchor" href="#2.-Loading-the-blood-donations-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Loading the blood donations data<a class="anchor-link" href="#2.-Loading-the-blood-donations-data"> </a>
+</h2>
+<p>We now know that we are working with a typical CSV file (i.e., the delimiter is <code>,</code>, etc.). We proceed to loading the data into memory.</p>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_sample_code">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Read in dataset</span>
+<span class="n">transfusion</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'datasets/transfusion.data'</span><span class="p">)</span>
+
+<span class="c1"># Print out the first rows of our dataset</span>
+<span class="c1"># ... YOUR CODE FOR TASK 2 ...</span>
+<span class="n">transfusion</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Recency (months)</th>
+      <th>Frequency (times)</th>
+      <th>Monetary (c.c. blood)</th>
+      <th>Time (months)</th>
+      <th>whether he/she donated blood in March 2007</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2</td>
+      <td>50</td>
+      <td>12500</td>
+      <td>98</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>13</td>
+      <td>3250</td>
+      <td>28</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>16</td>
+      <td>4000</td>
+      <td>35</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2</td>
+      <td>20</td>
+      <td>5000</td>
+      <td>45</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>24</td>
+      <td>6000</td>
+      <td>77</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered celltag_context">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3.-Inspecting-transfusion-DataFrame">
+<a class="anchor" href="#3.-Inspecting-transfusion-DataFrame" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Inspecting transfusion DataFrame<a class="anchor-link" href="#3.-Inspecting-transfusion-DataFrame"> </a>
+</h2>
+<p>Let's briefly return to our discussion of RFM model. RFM stands for Recency, Frequency and Monetary Value and it is commonly used in marketing for identifying your best customers. In our case, our customers are blood donors.</p>
+<p>RFMTC is a variation of the RFM model. Below is a description of what each column means in our dataset:</p>
+<ul>
+<li>R (Recency - months since the last donation)</li>
+<li>F (Frequency - total number of donation)</li>
+<li>M (Monetary - total blood donated in c.c.)</li>
+<li>T (Time - months since the first donation)</li>
+<li>a binary variable representing whether he/she donated blood in March 2007 (1 stands for donating blood; 0 stands for not donating blood)</li>
+</ul>
+<p>It looks like every column in our DataFrame has the numeric type, which is exactly what we want when building a machine learning model. Let's verify our hypothesis.</p>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_sample_code">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># ... YOUR CODE FOR TASK 3 ...</span>
+<span class="n">transfusion</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 748 entries, 0 to 747
+Data columns (total 5 columns):
+Recency (months)                              748 non-null int64
+Frequency (times)                             748 non-null int64
+Monetary (c.c. blood)                         748 non-null int64
+Time (months)                                 748 non-null int64
+whether he/she donated blood in March 2007    748 non-null int64
+dtypes: int64(5)
+memory usage: 29.3 KB
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered celltag_context">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="4.-Creating-target-column">
+<a class="anchor" href="#4.-Creating-target-column" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. Creating target column<a class="anchor-link" href="#4.-Creating-target-column"> </a>
+</h2>
+<p>We are aiming to predict the value in <code>whether he/she donated blood in March 2007</code> column. Let's rename this it to <code>target</code> so that it's more convenient to work with.</p>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_sample_code">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">transfusion</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">'whether he/she donated blood in March 2007'</span><span class="p">:</span> <span class="s1">'target'</span><span class="p">},</span>
+    <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="c1"># Print out the first 2 rows</span>
+<span class="c1"># ... YOUR CODE FOR TASK 4 ...</span>
+<span class="n">transfusion</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Recency (months)</th>
+      <th>Frequency (times)</th>
+      <th>Monetary (c.c. blood)</th>
+      <th>Time (months)</th>
+      <th>target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2</td>
+      <td>50</td>
+      <td>12500</td>
+      <td>98</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>13</td>
+      <td>3250</td>
+      <td>28</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered celltag_context">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="5.-Checking-target-incidence">
+<a class="anchor" href="#5.-Checking-target-incidence" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. Checking target incidence<a class="anchor-link" href="#5.-Checking-target-incidence"> </a>
+</h2>
+<p>We want to predict whether or not the same donor will give blood the next time the vehicle comes to campus. The model for this is a binary classifier, meaning that there are only 2 possible outcomes:</p>
+<ul>
+<li>
+<code>0</code> - the donor will not give blood</li>
+<li>
+<code>1</code> - the donor will give blood</li>
+</ul>
+<p>Target incidence is defined as the number of cases of each individual target value in a dataset. That is, how many 0s in the target column compared to how many 1s? Target incidence gives us an idea of how balanced (or imbalanced) is our dataset.</p>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_sample_code">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># ... YOUR CODE FOR TASK 5 ...</span>
+<span class="n">transfusion</span><span class="p">[</span><span class="s1">'target'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0    0.762
+1    0.238
+Name: target, dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered celltag_context">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="6.-Splitting-transfusion-into-train-and-test-datasets">
+<a class="anchor" href="#6.-Splitting-transfusion-into-train-and-test-datasets" aria-hidden="true"><span class="octicon octicon-link"></span></a>6. Splitting transfusion into train and test datasets<a class="anchor-link" href="#6.-Splitting-transfusion-into-train-and-test-datasets"> </a>
+</h2>
+<p>We'll now use <code>train_test_split()</code> method to split <code>transfusion</code> DataFrame.</p>
+<p>Target incidence informed us that in our dataset <code>0</code>s appear 76% of the time. We want to keep the same structure in train and test datasets, i.e., both datasets must have 0 target incidence of 76%. This is very easy to do using the <code>train_test_split()</code> method from the <code>scikit learn</code> library - all we need to do is specify the <code>stratify</code> parameter. In our case, we'll stratify on the <code>target</code> column.</p>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_sample_code">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="c1"># Split transfusion DataFrame into</span>
+<span class="c1"># X_train, X_test, y_train and y_test datasets,</span>
+<span class="c1"># stratifying on the `target` column</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">transfusion</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">'target'</span><span class="p">),</span>
+    <span class="n">transfusion</span><span class="o">.</span><span class="n">target</span><span class="p">,</span>
+    <span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+    <span class="n">stratify</span><span class="o">=</span><span class="n">transfusion</span><span class="o">.</span><span class="n">target</span>
+<span class="p">)</span>
+
+<span class="c1"># Print out the first 2 rows of X_train</span>
+<span class="c1"># ... YOUR CODE FOR TASK 6 ...</span>
+<span class="n">X_train</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Recency (months)</th>
+      <th>Frequency (times)</th>
+      <th>Monetary (c.c. blood)</th>
+      <th>Time (months)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>334</th>
+      <td>16</td>
+      <td>2</td>
+      <td>500</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>99</th>
+      <td>5</td>
+      <td>7</td>
+      <td>1750</td>
+      <td>26</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered celltag_context">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="7.-Selecting-model-using-TPOT">
+<a class="anchor" href="#7.-Selecting-model-using-TPOT" aria-hidden="true"><span class="octicon octicon-link"></span></a>7. Selecting model using TPOT<a class="anchor-link" href="#7.-Selecting-model-using-TPOT"> </a>
+</h2>
+<p><a href="https://github.com/EpistasisLab/tpot">TPOT</a> is a Python Automated Machine Learning tool that optimizes machine learning pipelines using genetic programming.</p>
+<p><img src="https://assets.datacamp.com/production/project_646/img/tpot-ml-pipeline.png" alt="TPOT Machine Learning Pipeline"></p>
+<p>TPOT will automatically explore hundreds of possible pipelines to find the best one for our dataset. Note, the outcome of this search will be a <a href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html">scikit-learn pipeline</a>, meaning it will include any pre-processing steps as well as the model.</p>
+<p>We are using TPOT to help us zero in on one model that we can then explore and optimize further.</p>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_sample_code">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">tpot</span> <span class="kn">import</span> <span class="n">TPOTClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span>
+
+<span class="c1"># Instantiate TPOTClassifier</span>
+<span class="n">tpot</span> <span class="o">=</span> <span class="n">TPOTClassifier</span><span class="p">(</span>
+    <span class="n">generations</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">population_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">verbosity</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s1">'roc_auc'</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+    <span class="n">disable_update_check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">config_dict</span><span class="o">=</span><span class="s1">'TPOT light'</span>
+<span class="p">)</span>
+<span class="n">tpot</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># AUC score for tpot model</span>
+<span class="n">tpot_auc_score</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">tpot</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="se">\n</span><span class="s1">AUC score: </span><span class="si">{</span><span class="n">tpot_auc_score</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+
+<span class="c1"># Print best pipeline steps</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">Best pipeline steps:'</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">transform</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tpot</span><span class="o">.</span><span class="n">fitted_pipeline_</span><span class="o">.</span><span class="n">steps</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="c1"># Print idx and transform</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s1">. </span><span class="si">{</span><span class="n">transform</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Generation 1 - Current best internal CV score: 0.7433977184592779
+Generation 2 - Current best internal CV score: 0.7433977184592779
+Generation 3 - Current best internal CV score: 0.7433977184592779
+Generation 4 - Current best internal CV score: 0.7433977184592779
+Generation 5 - Current best internal CV score: 0.7433977184592779
+
+Best pipeline: LogisticRegression(input_matrix, C=0.5, dual=False, penalty=l2)
+
+AUC score: 0.7850
+
+Best pipeline steps:
+1. LogisticRegression(C=0.5, class_weight=None, dual=False, fit_intercept=True,
+          intercept_scaling=1, max_iter=100, multi_class='warn',
+          n_jobs=None, penalty='l2', random_state=None, solver='warn',
+          tol=0.0001, verbose=0, warm_start=False)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered celltag_context">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="8.-Checking-the-variance">
+<a class="anchor" href="#8.-Checking-the-variance" aria-hidden="true"><span class="octicon octicon-link"></span></a>8. Checking the variance<a class="anchor-link" href="#8.-Checking-the-variance"> </a>
+</h2>
+<p>TPOT picked <code>LogisticRegression</code> as the best model for our dataset with no pre-processing steps, giving us the AUC score of 0.7850. This is a great starting point. Let's see if we can make it better.</p>
+<p>One of the assumptions for linear models is that the data and the features we are giving it are related in a linear fashion, or can be measured with a linear distance metric. If a feature in our dataset has a high variance that's orders of magnitude greater than the other features, this could impact the model's ability to learn from other features in the dataset.</p>
+<p>Correcting for high variance is called normalization. It is one of the possible transformations you do before training a model. Let's check the variance to see if such transformation is needed.</p>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_sample_code">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># ... YOUR CODE FOR TASK 8 ...</span>
+<span class="n">X_train</span><span class="o">.</span><span class="n">var</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Recency (months)              66.929
+Frequency (times)             33.830
+Monetary (c.c. blood)    2114363.700
+Time (months)                611.147
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered celltag_context">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="9.-Log-normalization">
+<a class="anchor" href="#9.-Log-normalization" aria-hidden="true"><span class="octicon octicon-link"></span></a>9. Log normalization<a class="anchor-link" href="#9.-Log-normalization"> </a>
+</h2>
+<p><code>Monetary (c.c. blood)</code>'s variance is very high in comparison to any other column in the dataset. This means that, unless accounted for, this feature may get more weight by the model (i.e., be seen as more important) than any other feature.</p>
+<p>One way to correct for high variance is to use log normalization.</p>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_sample_code">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Copy X_train and X_test into X_train_normed and X_test_normed</span>
+<span class="n">X_train_normed</span><span class="p">,</span> <span class="n">X_test_normed</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">X_test</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># Specify which column to normalize</span>
+<span class="n">col_to_normalize</span> <span class="o">=</span> <span class="s1">'Monetary (c.c. blood)'</span>
+
+<span class="c1"># Log normalization</span>
+<span class="k">for</span> <span class="n">df_</span> <span class="ow">in</span> <span class="p">[</span><span class="n">X_train_normed</span><span class="p">,</span> <span class="n">X_test_normed</span><span class="p">]:</span>
+    <span class="c1"># Add log normalized column</span>
+    <span class="n">df_</span><span class="p">[</span><span class="s1">'monetary_log'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">df_</span><span class="p">[</span><span class="n">col_to_normalize</span><span class="p">])</span>
+    <span class="c1"># Drop the original column</span>
+    <span class="n">df_</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">col_to_normalize</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Check the variance for X_train_normed</span>
+<span class="c1"># ... YOUR CODE FOR TASK 9 ...</span>
+<span class="n">X_train_normed</span><span class="o">.</span><span class="n">var</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Recency (months)      66.929
+Frequency (times)     33.830
+Time (months)        611.147
+monetary_log           0.837
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered celltag_context">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="10.-Training-the-logistic-regression-model">
+<a class="anchor" href="#10.-Training-the-logistic-regression-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>10. Training the logistic regression model<a class="anchor-link" href="#10.-Training-the-logistic-regression-model"> </a>
+</h2>
+<p>The variance looks much better now. Notice that now <code>Time (months)</code> has the largest variance, but it's not the <a href="https://en.wikipedia.org/wiki/Order_of_magnitude">orders of magnitude</a> higher than the rest of the variables, so we'll leave it as is.</p>
+<p>We are now ready to train the logistic regression model.</p>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_sample_code">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">linear_model</span>
+
+<span class="c1"># Instantiate LogisticRegression</span>
+<span class="n">logreg</span> <span class="o">=</span> <span class="n">linear_model</span><span class="o">.</span><span class="n">LogisticRegression</span><span class="p">(</span>
+    <span class="n">solver</span><span class="o">=</span><span class="s1">'liblinear'</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="c1"># Train the model</span>
+<span class="n">logreg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_normed</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># AUC score for tpot model</span>
+<span class="n">logreg_auc_score</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">logreg</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test_normed</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="se">\n</span><span class="s1">AUC score: </span><span class="si">{</span><span class="n">logreg_auc_score</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+AUC score: 0.7891
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered celltag_context">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="11.-Conclusion">
+<a class="anchor" href="#11.-Conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>11. Conclusion<a class="anchor-link" href="#11.-Conclusion"> </a>
+</h2>
+<p>The demand for blood fluctuates throughout the year. As one <a href="https://www.kjrh.com/news/local-news/red-cross-in-blood-donation-crisis">prominent</a> example, blood donations slow down during busy holiday seasons. An accurate forecast for the future supply of blood allows for an appropriate action to be taken ahead of time and therefore saving more lives.</p>
+<p>In this notebook, we explored automatic model selection using TPOT and AUC score we got was 0.7850. This is better than simply choosing <code>0</code> all the time (the target incidence suggests that such a model would have 76% success rate). We then log normalized our training data and improved the AUC score by 0.5%. In the field of machine learning, even small improvements in accuracy can be important, depending on the purpose.</p>
+<p>Another benefit of using logistic regression model is that it is interpretable. We can analyze how much of the variance in the response variable (<code>target</code>) can be explained by other variables in our dataset.</p>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_sample_code">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">itemgetter</span>
+
+<span class="c1"># Sort models based on their AUC score from highest to lowest</span>
+<span class="nb">sorted</span><span class="p">(</span>
+    <span class="p">[(</span><span class="s1">'tpot'</span><span class="p">,</span> <span class="n">tpot_auc_score</span><span class="p">),</span> <span class="p">(</span><span class="s1">'logreg'</span><span class="p">,</span> <span class="n">logreg_auc_score</span><span class="p">)],</span>
+    <span class="n">key</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[('logreg', 0.7890972663699937), ('tpot', 0.7849650349650349)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="AnuragAnalog/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/datacamp/projects/python/2021/03/15/Give-Life-Predict-Blood-Donations.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>My Jupyter Notebooks in the form of blog posts.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/AnuragAnalog" target="_blank" title="AnuragAnalog"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.instagram.com/anurag.peddi" target="_blank" title="anurag.peddi"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#instagram"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/peddi-anurag-01767a166" target="_blank" title="peddi-anurag-01767a166"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://twitter.com/anuragpeddi" target="_blank" title="anuragpeddi"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
