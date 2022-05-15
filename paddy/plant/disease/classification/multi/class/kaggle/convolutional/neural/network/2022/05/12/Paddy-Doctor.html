@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Paddy Doctor - Paddy Disease Classification | AnuragAnalog’s Notebooks</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Paddy Doctor - Paddy Disease Classification" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A Multi Class Classification problem, for classifying the diseases in the Paddy Plant" />
+<meta property="og:description" content="A Multi Class Classification problem, for classifying the diseases in the Paddy Plant" />
+<link rel="canonical" href="https://anuraganalog.github.io/blog/paddy/plant/disease/classification/multi/class/kaggle/convolutional/neural/network/2022/05/12/Paddy-Doctor.html" />
+<meta property="og:url" content="https://anuraganalog.github.io/blog/paddy/plant/disease/classification/multi/class/kaggle/convolutional/neural/network/2022/05/12/Paddy-Doctor.html" />
+<meta property="og:site_name" content="AnuragAnalog’s Notebooks" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-05-12T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Paddy Doctor - Paddy Disease Classification" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-05-12T00:00:00-05:00","datePublished":"2022-05-12T00:00:00-05:00","description":"A Multi Class Classification problem, for classifying the diseases in the Paddy Plant","headline":"Paddy Doctor - Paddy Disease Classification","mainEntityOfPage":{"@type":"WebPage","@id":"https://anuraganalog.github.io/blog/paddy/plant/disease/classification/multi/class/kaggle/convolutional/neural/network/2022/05/12/Paddy-Doctor.html"},"url":"https://anuraganalog.github.io/blog/paddy/plant/disease/classification/multi/class/kaggle/convolutional/neural/network/2022/05/12/Paddy-Doctor.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://anuraganalog.github.io/blog/feed.xml" title="AnuragAnalog's Notebooks" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YHQ9QB159E"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YHQ9QB159E');
+</script>
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">AnuragAnalog&#39;s Notebooks</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Paddy Doctor - Paddy Disease Classification</h1><p class="page-description">A Multi Class Classification problem, for classifying the diseases in the Paddy Plant</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-05-12T00:00:00-05:00" itemprop="datePublished">
+        May 12, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      12 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#paddy">paddy</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#plant">plant</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#disease">disease</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#classification">classification</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#multi">multi</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#class">class</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#kaggle">kaggle</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#convolutional">convolutional</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#neural">neural</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#network">network</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/AnuragAnalog/blog/tree/master/_notebooks/2022-05-12-Paddy-Doctor.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/AnuragAnalog/blog/master?filepath=_notebooks%2F2022-05-12-Paddy-Doctor.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/AnuragAnalog/blog/blob/master/_notebooks/2022-05-12-Paddy-Doctor.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2FAnuragAnalog%2Fblog%2Fblob%2Fmaster%2F_notebooks%2F2022-05-12-Paddy-Doctor.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/blog/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#Loading-the-data">Loading the data </a></li>
+<li class="toc-entry toc-h2"><a href="#Modelling">Modelling </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Approach-1">Approach-1 </a></li>
+<li class="toc-entry toc-h3"><a href="#Approach-2">Approach-2 </a></li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022-05-12-Paddy-Doctor.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="kn">from</span> <span class="nn">zipfile</span> <span class="kn">import</span> <span class="n">ZipFile</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">'figure.figsize'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Before running the below cell, upload your kaggle token, to make sure an error doesn't popup.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">mkdir</span> <span class="o">~/.</span><span class="n">kaggle</span>
+<span class="err">!</span><span class="n">cp</span> <span class="n">kaggle</span><span class="o">.</span><span class="n">json</span> <span class="o">~/.</span><span class="n">kaggle</span><span class="o">/</span>
+<span class="err">!</span><span class="n">chmod</span> <span class="mi">600</span> <span class="o">~/.</span><span class="n">kaggle</span><span class="o">/</span><span class="n">kaggle</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>mkdir: cannot create directory ‘/root/.kaggle’: File exists
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">kaggle</span> <span class="n">competitions</span> <span class="n">download</span> <span class="o">-</span><span class="n">c</span> <span class="n">paddy</span><span class="o">-</span><span class="n">disease</span><span class="o">-</span><span class="n">classification</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Downloading paddy-disease-classification.zip to /content
+ 99% 1.00G/1.02G [00:07&lt;00:00, 161MB/s]
+100% 1.02G/1.02G [00:07&lt;00:00, 147MB/s]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">with</span> <span class="n">ZipFile</span><span class="p">(</span><span class="s1">'/content/paddy-disease-classification.zip'</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">zf</span><span class="p">:</span>
+    <span class="n">zf</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="s1">'./'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Loading-the-data">
+<a class="anchor" href="#Loading-the-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Loading the data<a class="anchor-link" href="#Loading-the-data"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">img_dim</span> <span class="o">=</span> <span class="mi">256</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="n">training_dir</span> <span class="o">=</span> <span class="s1">'./train_images'</span>
+<span class="n">testing_dir</span> <span class="o">=</span> <span class="s1">'./test_images'</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'train.csv'</span><span class="p">)</span>
+<span class="n">train</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+  <div id="df-6aa824bf-d09d-4433-8e84-64a153869c1a">
+    <div class="colab-df-container">
+      <div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>image_id</th>
+      <th>label</th>
+      <th>variety</th>
+      <th>age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>100330.jpg</td>
+      <td>bacterial_leaf_blight</td>
+      <td>ADT45</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>100365.jpg</td>
+      <td>bacterial_leaf_blight</td>
+      <td>ADT45</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>100382.jpg</td>
+      <td>bacterial_leaf_blight</td>
+      <td>ADT45</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>100632.jpg</td>
+      <td>bacterial_leaf_blight</td>
+      <td>ADT45</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>101918.jpg</td>
+      <td>bacterial_leaf_blight</td>
+      <td>ADT45</td>
+      <td>45</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-6aa824bf-d09d-4433-8e84-64a153869c1a')" title="Convert this dataframe to an interactive table." style="display:none;">
+        
+  &lt;svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px"&gt;
+    <path d="M0 0h24v24H0V0z" fill="none"></path>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"></path><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"></path>
+  &lt;/svg&gt;
+      </button>
+      
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-6aa824bf-d09d-4433-8e84-64a153869c1a button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-6aa824bf-d09d-4433-8e84-64a153869c1a');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+  
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">datagen</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">ImageDataGenerator</span><span class="p">(</span>
+    <span class="n">rescale</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mf">255.</span><span class="p">,</span>
+    <span class="n">horizontal_flip</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">vertical_flip</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.2</span>
+<span class="p">)</span>
+
+<span class="n">train_generator</span> <span class="o">=</span> <span class="n">datagen</span><span class="o">.</span><span class="n">flow_from_directory</span><span class="p">(</span>
+    <span class="n">training_dir</span><span class="p">,</span>
+    <span class="n">subset</span><span class="o">=</span><span class="s1">'training'</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">88</span><span class="p">,</span>
+    <span class="n">target_size</span><span class="o">=</span><span class="p">(</span><span class="n">img_dim</span><span class="p">,</span> <span class="n">img_dim</span><span class="p">),</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+    <span class="n">class_mode</span><span class="o">=</span><span class="s1">'categorical'</span>
+<span class="p">)</span>
+
+<span class="n">valid_generator</span> <span class="o">=</span> <span class="n">datagen</span><span class="o">.</span><span class="n">flow_from_directory</span><span class="p">(</span>
+    <span class="n">training_dir</span><span class="p">,</span>
+    <span class="n">subset</span><span class="o">=</span><span class="s1">'validation'</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">88</span><span class="p">,</span>
+    <span class="n">target_size</span><span class="o">=</span><span class="p">(</span><span class="n">img_dim</span><span class="p">,</span> <span class="n">img_dim</span><span class="p">),</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+    <span class="n">class_mode</span><span class="o">=</span><span class="s1">'categorical'</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Found 8330 images belonging to 10 classes.
+Found 2077 images belonging to 10 classes.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">train_generator</span><span class="o">.</span><span class="n">class_indices</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{'bacterial_leaf_blight': 0,
+ 'bacterial_leaf_streak': 1,
+ 'bacterial_panicle_blight': 2,
+ 'blast': 3,
+ 'brown_spot': 4,
+ 'dead_heart': 5,
+ 'downy_mildew': 6,
+ 'hispa': 7,
+ 'normal': 8,
+ 'tungro': 9}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Modelling">
+<a class="anchor" href="#Modelling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modelling<a class="anchor-link" href="#Modelling"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Approach-1">
+<a class="anchor" href="#Approach-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Approach-1<a class="anchor-link" href="#Approach-1"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Use of a Hand picked model, in modelling the problem</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">'relu'</span><span class="p">),</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">(),</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">(),</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">'relu'</span><span class="p">),</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">(),</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">(),</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">'relu'</span><span class="p">),</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">(),</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">(),</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">'relu'</span><span class="p">),</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">(),</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">(),</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(),</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">'relu'</span><span class="p">),</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">'relu'</span><span class="p">),</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">'softmax'</span><span class="p">),</span>
+<span class="p">])</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Model: "sequential"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ conv2d (Conv2D)             (None, 254, 254, 64)      1792      
+                                                                 
+ batch_normalization (BatchN  (None, 254, 254, 64)     256       
+ ormalization)                                                   
+                                                                 
+ max_pooling2d (MaxPooling2D  (None, 127, 127, 64)     0         
+ )                                                               
+                                                                 
+ conv2d_1 (Conv2D)           (None, 125, 125, 32)      18464     
+                                                                 
+ batch_normalization_1 (Batc  (None, 125, 125, 32)     128       
+ hNormalization)                                                 
+                                                                 
+ max_pooling2d_1 (MaxPooling  (None, 62, 62, 32)       0         
+ 2D)                                                             
+                                                                 
+ conv2d_2 (Conv2D)           (None, 60, 60, 32)        9248      
+                                                                 
+ batch_normalization_2 (Batc  (None, 60, 60, 32)       128       
+ hNormalization)                                                 
+                                                                 
+ max_pooling2d_2 (MaxPooling  (None, 30, 30, 32)       0         
+ 2D)                                                             
+                                                                 
+ conv2d_3 (Conv2D)           (None, 28, 28, 32)        9248      
+                                                                 
+ batch_normalization_3 (Batc  (None, 28, 28, 32)       128       
+ hNormalization)                                                 
+                                                                 
+ max_pooling2d_3 (MaxPooling  (None, 14, 14, 32)       0         
+ 2D)                                                             
+                                                                 
+ flatten (Flatten)           (None, 6272)              0         
+                                                                 
+ dense (Dense)               (None, 128)               802944    
+                                                                 
+ dropout (Dropout)           (None, 128)               0         
+                                                                 
+ dense_1 (Dense)             (None, 32)                4128      
+                                                                 
+ dropout_1 (Dropout)         (None, 32)                0         
+                                                                 
+ dense_2 (Dense)             (None, 10)                330       
+                                                                 
+=================================================================
+Total params: 846,794
+Trainable params: 846,474
+Non-trainable params: 320
+_________________________________________________________________
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Approach-2">
+<a class="anchor" href="#Approach-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Approach-2<a class="anchor-link" href="#Approach-2"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">input_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">img_dim</span><span class="p">,</span> <span class="n">img_dim</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">pretrained</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">mobilenet_v2</span><span class="o">.</span><span class="n">MobileNetV2</span><span class="p">(</span><span class="n">include_top</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="s1">'imagenet'</span><span class="p">,</span> <span class="n">input_tensor</span><span class="o">=</span><span class="n">input_layer</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">pretrained</span><span class="o">.</span><span class="n">layers</span><span class="p">:</span>
+    <span class="n">layer</span><span class="o">.</span><span class="n">trainable</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">custom_network</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">()(</span><span class="n">pretrained</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
+<span class="n">custom_network</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">'relu'</span><span class="p">)(</span><span class="n">custom_network</span><span class="p">)</span>
+<span class="n">custom_network</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">'relu'</span><span class="p">)(</span><span class="n">custom_network</span><span class="p">)</span>
+<span class="n">custom_network</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">'relu'</span><span class="p">)(</span><span class="n">custom_network</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">input_layer</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">custom_network</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>WARNING:tensorflow:`input_shape` is undefined or non-square, or `rows` is not in [96, 128, 160, 192, 224]. Weights for input shape (224, 224) will be loaded as the default.
+Model: "model"
+__________________________________________________________________________________________________
+ Layer (type)                   Output Shape         Param #     Connected to                     
+==================================================================================================
+ input_1 (InputLayer)           [(None, 256, 256, 3  0           []                               
+                                )]                                                                
+                                                                                                  
+ Conv1 (Conv2D)                 (None, 128, 128, 32  864         ['input_1[0][0]']                
+                                )                                                                 
+                                                                                                  
+ bn_Conv1 (BatchNormalization)  (None, 128, 128, 32  128         ['Conv1[0][0]']                  
+                                )                                                                 
+                                                                                                  
+ Conv1_relu (ReLU)              (None, 128, 128, 32  0           ['bn_Conv1[0][0]']               
+                                )                                                                 
+                                                                                                  
+ expanded_conv_depthwise (Depth  (None, 128, 128, 32  288        ['Conv1_relu[0][0]']             
+ wiseConv2D)                    )                                                                 
+                                                                                                  
+ expanded_conv_depthwise_BN (Ba  (None, 128, 128, 32  128        ['expanded_conv_depthwise[0][0]']
+ tchNormalization)              )                                                                 
+                                                                                                  
+ expanded_conv_depthwise_relu (  (None, 128, 128, 32  0          ['expanded_conv_depthwise_BN[0][0
+ ReLU)                          )                                ]']                              
+                                                                                                  
+ expanded_conv_project (Conv2D)  (None, 128, 128, 16  512        ['expanded_conv_depthwise_relu[0]
+                                )                                [0]']                            
+                                                                                                  
+ expanded_conv_project_BN (Batc  (None, 128, 128, 16  64         ['expanded_conv_project[0][0]']  
+ hNormalization)                )                                                                 
+                                                                                                  
+ block_1_expand (Conv2D)        (None, 128, 128, 96  1536        ['expanded_conv_project_BN[0][0]'
+                                )                                ]                                
+                                                                                                  
+ block_1_expand_BN (BatchNormal  (None, 128, 128, 96  384        ['block_1_expand[0][0]']         
+ ization)                       )                                                                 
+                                                                                                  
+ block_1_expand_relu (ReLU)     (None, 128, 128, 96  0           ['block_1_expand_BN[0][0]']      
+                                )                                                                 
+                                                                                                  
+ block_1_pad (ZeroPadding2D)    (None, 129, 129, 96  0           ['block_1_expand_relu[0][0]']    
+                                )                                                                 
+                                                                                                  
+ block_1_depthwise (DepthwiseCo  (None, 64, 64, 96)  864         ['block_1_pad[0][0]']            
+ nv2D)                                                                                            
+                                                                                                  
+ block_1_depthwise_BN (BatchNor  (None, 64, 64, 96)  384         ['block_1_depthwise[0][0]']      
+ malization)                                                                                      
+                                                                                                  
+ block_1_depthwise_relu (ReLU)  (None, 64, 64, 96)   0           ['block_1_depthwise_BN[0][0]']   
+                                                                                                  
+ block_1_project (Conv2D)       (None, 64, 64, 24)   2304        ['block_1_depthwise_relu[0][0]'] 
+                                                                                                  
+ block_1_project_BN (BatchNorma  (None, 64, 64, 24)  96          ['block_1_project[0][0]']        
+ lization)                                                                                        
+                                                                                                  
+ block_2_expand (Conv2D)        (None, 64, 64, 144)  3456        ['block_1_project_BN[0][0]']     
+                                                                                                  
+ block_2_expand_BN (BatchNormal  (None, 64, 64, 144)  576        ['block_2_expand[0][0]']         
+ ization)                                                                                         
+                                                                                                  
+ block_2_expand_relu (ReLU)     (None, 64, 64, 144)  0           ['block_2_expand_BN[0][0]']      
+                                                                                                  
+ block_2_depthwise (DepthwiseCo  (None, 64, 64, 144)  1296       ['block_2_expand_relu[0][0]']    
+ nv2D)                                                                                            
+                                                                                                  
+ block_2_depthwise_BN (BatchNor  (None, 64, 64, 144)  576        ['block_2_depthwise[0][0]']      
+ malization)                                                                                      
+                                                                                                  
+ block_2_depthwise_relu (ReLU)  (None, 64, 64, 144)  0           ['block_2_depthwise_BN[0][0]']   
+                                                                                                  
+ block_2_project (Conv2D)       (None, 64, 64, 24)   3456        ['block_2_depthwise_relu[0][0]'] 
+                                                                                                  
+ block_2_project_BN (BatchNorma  (None, 64, 64, 24)  96          ['block_2_project[0][0]']        
+ lization)                                                                                        
+                                                                                                  
+ block_2_add (Add)              (None, 64, 64, 24)   0           ['block_1_project_BN[0][0]',     
+                                                                  'block_2_project_BN[0][0]']     
+                                                                                                  
+ block_3_expand (Conv2D)        (None, 64, 64, 144)  3456        ['block_2_add[0][0]']            
+                                                                                                  
+ block_3_expand_BN (BatchNormal  (None, 64, 64, 144)  576        ['block_3_expand[0][0]']         
+ ization)                                                                                         
+                                                                                                  
+ block_3_expand_relu (ReLU)     (None, 64, 64, 144)  0           ['block_3_expand_BN[0][0]']      
+                                                                                                  
+ block_3_pad (ZeroPadding2D)    (None, 65, 65, 144)  0           ['block_3_expand_relu[0][0]']    
+                                                                                                  
+ block_3_depthwise (DepthwiseCo  (None, 32, 32, 144)  1296       ['block_3_pad[0][0]']            
+ nv2D)                                                                                            
+                                                                                                  
+ block_3_depthwise_BN (BatchNor  (None, 32, 32, 144)  576        ['block_3_depthwise[0][0]']      
+ malization)                                                                                      
+                                                                                                  
+ block_3_depthwise_relu (ReLU)  (None, 32, 32, 144)  0           ['block_3_depthwise_BN[0][0]']   
+                                                                                                  
+ block_3_project (Conv2D)       (None, 32, 32, 32)   4608        ['block_3_depthwise_relu[0][0]'] 
+                                                                                                  
+ block_3_project_BN (BatchNorma  (None, 32, 32, 32)  128         ['block_3_project[0][0]']        
+ lization)                                                                                        
+                                                                                                  
+ block_4_expand (Conv2D)        (None, 32, 32, 192)  6144        ['block_3_project_BN[0][0]']     
+                                                                                                  
+ block_4_expand_BN (BatchNormal  (None, 32, 32, 192)  768        ['block_4_expand[0][0]']         
+ ization)                                                                                         
+                                                                                                  
+ block_4_expand_relu (ReLU)     (None, 32, 32, 192)  0           ['block_4_expand_BN[0][0]']      
+                                                                                                  
+ block_4_depthwise (DepthwiseCo  (None, 32, 32, 192)  1728       ['block_4_expand_relu[0][0]']    
+ nv2D)                                                                                            
+                                                                                                  
+ block_4_depthwise_BN (BatchNor  (None, 32, 32, 192)  768        ['block_4_depthwise[0][0]']      
+ malization)                                                                                      
+                                                                                                  
+ block_4_depthwise_relu (ReLU)  (None, 32, 32, 192)  0           ['block_4_depthwise_BN[0][0]']   
+                                                                                                  
+ block_4_project (Conv2D)       (None, 32, 32, 32)   6144        ['block_4_depthwise_relu[0][0]'] 
+                                                                                                  
+ block_4_project_BN (BatchNorma  (None, 32, 32, 32)  128         ['block_4_project[0][0]']        
+ lization)                                                                                        
+                                                                                                  
+ block_4_add (Add)              (None, 32, 32, 32)   0           ['block_3_project_BN[0][0]',     
+                                                                  'block_4_project_BN[0][0]']     
+                                                                                                  
+ block_5_expand (Conv2D)        (None, 32, 32, 192)  6144        ['block_4_add[0][0]']            
+                                                                                                  
+ block_5_expand_BN (BatchNormal  (None, 32, 32, 192)  768        ['block_5_expand[0][0]']         
+ ization)                                                                                         
+                                                                                                  
+ block_5_expand_relu (ReLU)     (None, 32, 32, 192)  0           ['block_5_expand_BN[0][0]']      
+                                                                                                  
+ block_5_depthwise (DepthwiseCo  (None, 32, 32, 192)  1728       ['block_5_expand_relu[0][0]']    
+ nv2D)                                                                                            
+                                                                                                  
+ block_5_depthwise_BN (BatchNor  (None, 32, 32, 192)  768        ['block_5_depthwise[0][0]']      
+ malization)                                                                                      
+                                                                                                  
+ block_5_depthwise_relu (ReLU)  (None, 32, 32, 192)  0           ['block_5_depthwise_BN[0][0]']   
+                                                                                                  
+ block_5_project (Conv2D)       (None, 32, 32, 32)   6144        ['block_5_depthwise_relu[0][0]'] 
+                                                                                                  
+ block_5_project_BN (BatchNorma  (None, 32, 32, 32)  128         ['block_5_project[0][0]']        
+ lization)                                                                                        
+                                                                                                  
+ block_5_add (Add)              (None, 32, 32, 32)   0           ['block_4_add[0][0]',            
+                                                                  'block_5_project_BN[0][0]']     
+                                                                                                  
+ block_6_expand (Conv2D)        (None, 32, 32, 192)  6144        ['block_5_add[0][0]']            
+                                                                                                  
+ block_6_expand_BN (BatchNormal  (None, 32, 32, 192)  768        ['block_6_expand[0][0]']         
+ ization)                                                                                         
+                                                                                                  
+ block_6_expand_relu (ReLU)     (None, 32, 32, 192)  0           ['block_6_expand_BN[0][0]']      
+                                                                                                  
+ block_6_pad (ZeroPadding2D)    (None, 33, 33, 192)  0           ['block_6_expand_relu[0][0]']    
+                                                                                                  
+ block_6_depthwise (DepthwiseCo  (None, 16, 16, 192)  1728       ['block_6_pad[0][0]']            
+ nv2D)                                                                                            
+                                                                                                  
+ block_6_depthwise_BN (BatchNor  (None, 16, 16, 192)  768        ['block_6_depthwise[0][0]']      
+ malization)                                                                                      
+                                                                                                  
+ block_6_depthwise_relu (ReLU)  (None, 16, 16, 192)  0           ['block_6_depthwise_BN[0][0]']   
+                                                                                                  
+ block_6_project (Conv2D)       (None, 16, 16, 64)   12288       ['block_6_depthwise_relu[0][0]'] 
+                                                                                                  
+ block_6_project_BN (BatchNorma  (None, 16, 16, 64)  256         ['block_6_project[0][0]']        
+ lization)                                                                                        
+                                                                                                  
+ block_7_expand (Conv2D)        (None, 16, 16, 384)  24576       ['block_6_project_BN[0][0]']     
+                                                                                                  
+ block_7_expand_BN (BatchNormal  (None, 16, 16, 384)  1536       ['block_7_expand[0][0]']         
+ ization)                                                                                         
+                                                                                                  
+ block_7_expand_relu (ReLU)     (None, 16, 16, 384)  0           ['block_7_expand_BN[0][0]']      
+                                                                                                  
+ block_7_depthwise (DepthwiseCo  (None, 16, 16, 384)  3456       ['block_7_expand_relu[0][0]']    
+ nv2D)                                                                                            
+                                                                                                  
+ block_7_depthwise_BN (BatchNor  (None, 16, 16, 384)  1536       ['block_7_depthwise[0][0]']      
+ malization)                                                                                      
+                                                                                                  
+ block_7_depthwise_relu (ReLU)  (None, 16, 16, 384)  0           ['block_7_depthwise_BN[0][0]']   
+                                                                                                  
+ block_7_project (Conv2D)       (None, 16, 16, 64)   24576       ['block_7_depthwise_relu[0][0]'] 
+                                                                                                  
+ block_7_project_BN (BatchNorma  (None, 16, 16, 64)  256         ['block_7_project[0][0]']        
+ lization)                                                                                        
+                                                                                                  
+ block_7_add (Add)              (None, 16, 16, 64)   0           ['block_6_project_BN[0][0]',     
+                                                                  'block_7_project_BN[0][0]']     
+                                                                                                  
+ block_8_expand (Conv2D)        (None, 16, 16, 384)  24576       ['block_7_add[0][0]']            
+                                                                                                  
+ block_8_expand_BN (BatchNormal  (None, 16, 16, 384)  1536       ['block_8_expand[0][0]']         
+ ization)                                                                                         
+                                                                                                  
+ block_8_expand_relu (ReLU)     (None, 16, 16, 384)  0           ['block_8_expand_BN[0][0]']      
+                                                                                                  
+ block_8_depthwise (DepthwiseCo  (None, 16, 16, 384)  3456       ['block_8_expand_relu[0][0]']    
+ nv2D)                                                                                            
+                                                                                                  
+ block_8_depthwise_BN (BatchNor  (None, 16, 16, 384)  1536       ['block_8_depthwise[0][0]']      
+ malization)                                                                                      
+                                                                                                  
+ block_8_depthwise_relu (ReLU)  (None, 16, 16, 384)  0           ['block_8_depthwise_BN[0][0]']   
+                                                                                                  
+ block_8_project (Conv2D)       (None, 16, 16, 64)   24576       ['block_8_depthwise_relu[0][0]'] 
+                                                                                                  
+ block_8_project_BN (BatchNorma  (None, 16, 16, 64)  256         ['block_8_project[0][0]']        
+ lization)                                                                                        
+                                                                                                  
+ block_8_add (Add)              (None, 16, 16, 64)   0           ['block_7_add[0][0]',            
+                                                                  'block_8_project_BN[0][0]']     
+                                                                                                  
+ block_9_expand (Conv2D)        (None, 16, 16, 384)  24576       ['block_8_add[0][0]']            
+                                                                                                  
+ block_9_expand_BN (BatchNormal  (None, 16, 16, 384)  1536       ['block_9_expand[0][0]']         
+ ization)                                                                                         
+                                                                                                  
+ block_9_expand_relu (ReLU)     (None, 16, 16, 384)  0           ['block_9_expand_BN[0][0]']      
+                                                                                                  
+ block_9_depthwise (DepthwiseCo  (None, 16, 16, 384)  3456       ['block_9_expand_relu[0][0]']    
+ nv2D)                                                                                            
+                                                                                                  
+ block_9_depthwise_BN (BatchNor  (None, 16, 16, 384)  1536       ['block_9_depthwise[0][0]']      
+ malization)                                                                                      
+                                                                                                  
+ block_9_depthwise_relu (ReLU)  (None, 16, 16, 384)  0           ['block_9_depthwise_BN[0][0]']   
+                                                                                                  
+ block_9_project (Conv2D)       (None, 16, 16, 64)   24576       ['block_9_depthwise_relu[0][0]'] 
+                                                                                                  
+ block_9_project_BN (BatchNorma  (None, 16, 16, 64)  256         ['block_9_project[0][0]']        
+ lization)                                                                                        
+                                                                                                  
+ block_9_add (Add)              (None, 16, 16, 64)   0           ['block_8_add[0][0]',            
+                                                                  'block_9_project_BN[0][0]']     
+                                                                                                  
+ block_10_expand (Conv2D)       (None, 16, 16, 384)  24576       ['block_9_add[0][0]']            
+                                                                                                  
+ block_10_expand_BN (BatchNorma  (None, 16, 16, 384)  1536       ['block_10_expand[0][0]']        
+ lization)                                                                                        
+                                                                                                  
+ block_10_expand_relu (ReLU)    (None, 16, 16, 384)  0           ['block_10_expand_BN[0][0]']     
+                                                                                                  
+ block_10_depthwise (DepthwiseC  (None, 16, 16, 384)  3456       ['block_10_expand_relu[0][0]']   
+ onv2D)                                                                                           
+                                                                                                  
+ block_10_depthwise_BN (BatchNo  (None, 16, 16, 384)  1536       ['block_10_depthwise[0][0]']     
+ rmalization)                                                                                     
+                                                                                                  
+ block_10_depthwise_relu (ReLU)  (None, 16, 16, 384)  0          ['block_10_depthwise_BN[0][0]']  
+                                                                                                  
+ block_10_project (Conv2D)      (None, 16, 16, 96)   36864       ['block_10_depthwise_relu[0][0]']
+                                                                                                  
+ block_10_project_BN (BatchNorm  (None, 16, 16, 96)  384         ['block_10_project[0][0]']       
+ alization)                                                                                       
+                                                                                                  
+ block_11_expand (Conv2D)       (None, 16, 16, 576)  55296       ['block_10_project_BN[0][0]']    
+                                                                                                  
+ block_11_expand_BN (BatchNorma  (None, 16, 16, 576)  2304       ['block_11_expand[0][0]']        
+ lization)                                                                                        
+                                                                                                  
+ block_11_expand_relu (ReLU)    (None, 16, 16, 576)  0           ['block_11_expand_BN[0][0]']     
+                                                                                                  
+ block_11_depthwise (DepthwiseC  (None, 16, 16, 576)  5184       ['block_11_expand_relu[0][0]']   
+ onv2D)                                                                                           
+                                                                                                  
+ block_11_depthwise_BN (BatchNo  (None, 16, 16, 576)  2304       ['block_11_depthwise[0][0]']     
+ rmalization)                                                                                     
+                                                                                                  
+ block_11_depthwise_relu (ReLU)  (None, 16, 16, 576)  0          ['block_11_depthwise_BN[0][0]']  
+                                                                                                  
+ block_11_project (Conv2D)      (None, 16, 16, 96)   55296       ['block_11_depthwise_relu[0][0]']
+                                                                                                  
+ block_11_project_BN (BatchNorm  (None, 16, 16, 96)  384         ['block_11_project[0][0]']       
+ alization)                                                                                       
+                                                                                                  
+ block_11_add (Add)             (None, 16, 16, 96)   0           ['block_10_project_BN[0][0]',    
+                                                                  'block_11_project_BN[0][0]']    
+                                                                                                  
+ block_12_expand (Conv2D)       (None, 16, 16, 576)  55296       ['block_11_add[0][0]']           
+                                                                                                  
+ block_12_expand_BN (BatchNorma  (None, 16, 16, 576)  2304       ['block_12_expand[0][0]']        
+ lization)                                                                                        
+                                                                                                  
+ block_12_expand_relu (ReLU)    (None, 16, 16, 576)  0           ['block_12_expand_BN[0][0]']     
+                                                                                                  
+ block_12_depthwise (DepthwiseC  (None, 16, 16, 576)  5184       ['block_12_expand_relu[0][0]']   
+ onv2D)                                                                                           
+                                                                                                  
+ block_12_depthwise_BN (BatchNo  (None, 16, 16, 576)  2304       ['block_12_depthwise[0][0]']     
+ rmalization)                                                                                     
+                                                                                                  
+ block_12_depthwise_relu (ReLU)  (None, 16, 16, 576)  0          ['block_12_depthwise_BN[0][0]']  
+                                                                                                  
+ block_12_project (Conv2D)      (None, 16, 16, 96)   55296       ['block_12_depthwise_relu[0][0]']
+                                                                                                  
+ block_12_project_BN (BatchNorm  (None, 16, 16, 96)  384         ['block_12_project[0][0]']       
+ alization)                                                                                       
+                                                                                                  
+ block_12_add (Add)             (None, 16, 16, 96)   0           ['block_11_add[0][0]',           
+                                                                  'block_12_project_BN[0][0]']    
+                                                                                                  
+ block_13_expand (Conv2D)       (None, 16, 16, 576)  55296       ['block_12_add[0][0]']           
+                                                                                                  
+ block_13_expand_BN (BatchNorma  (None, 16, 16, 576)  2304       ['block_13_expand[0][0]']        
+ lization)                                                                                        
+                                                                                                  
+ block_13_expand_relu (ReLU)    (None, 16, 16, 576)  0           ['block_13_expand_BN[0][0]']     
+                                                                                                  
+ block_13_pad (ZeroPadding2D)   (None, 17, 17, 576)  0           ['block_13_expand_relu[0][0]']   
+                                                                                                  
+ block_13_depthwise (DepthwiseC  (None, 8, 8, 576)   5184        ['block_13_pad[0][0]']           
+ onv2D)                                                                                           
+                                                                                                  
+ block_13_depthwise_BN (BatchNo  (None, 8, 8, 576)   2304        ['block_13_depthwise[0][0]']     
+ rmalization)                                                                                     
+                                                                                                  
+ block_13_depthwise_relu (ReLU)  (None, 8, 8, 576)   0           ['block_13_depthwise_BN[0][0]']  
+                                                                                                  
+ block_13_project (Conv2D)      (None, 8, 8, 160)    92160       ['block_13_depthwise_relu[0][0]']
+                                                                                                  
+ block_13_project_BN (BatchNorm  (None, 8, 8, 160)   640         ['block_13_project[0][0]']       
+ alization)                                                                                       
+                                                                                                  
+ block_14_expand (Conv2D)       (None, 8, 8, 960)    153600      ['block_13_project_BN[0][0]']    
+                                                                                                  
+ block_14_expand_BN (BatchNorma  (None, 8, 8, 960)   3840        ['block_14_expand[0][0]']        
+ lization)                                                                                        
+                                                                                                  
+ block_14_expand_relu (ReLU)    (None, 8, 8, 960)    0           ['block_14_expand_BN[0][0]']     
+                                                                                                  
+ block_14_depthwise (DepthwiseC  (None, 8, 8, 960)   8640        ['block_14_expand_relu[0][0]']   
+ onv2D)                                                                                           
+                                                                                                  
+ block_14_depthwise_BN (BatchNo  (None, 8, 8, 960)   3840        ['block_14_depthwise[0][0]']     
+ rmalization)                                                                                     
+                                                                                                  
+ block_14_depthwise_relu (ReLU)  (None, 8, 8, 960)   0           ['block_14_depthwise_BN[0][0]']  
+                                                                                                  
+ block_14_project (Conv2D)      (None, 8, 8, 160)    153600      ['block_14_depthwise_relu[0][0]']
+                                                                                                  
+ block_14_project_BN (BatchNorm  (None, 8, 8, 160)   640         ['block_14_project[0][0]']       
+ alization)                                                                                       
+                                                                                                  
+ block_14_add (Add)             (None, 8, 8, 160)    0           ['block_13_project_BN[0][0]',    
+                                                                  'block_14_project_BN[0][0]']    
+                                                                                                  
+ block_15_expand (Conv2D)       (None, 8, 8, 960)    153600      ['block_14_add[0][0]']           
+                                                                                                  
+ block_15_expand_BN (BatchNorma  (None, 8, 8, 960)   3840        ['block_15_expand[0][0]']        
+ lization)                                                                                        
+                                                                                                  
+ block_15_expand_relu (ReLU)    (None, 8, 8, 960)    0           ['block_15_expand_BN[0][0]']     
+                                                                                                  
+ block_15_depthwise (DepthwiseC  (None, 8, 8, 960)   8640        ['block_15_expand_relu[0][0]']   
+ onv2D)                                                                                           
+                                                                                                  
+ block_15_depthwise_BN (BatchNo  (None, 8, 8, 960)   3840        ['block_15_depthwise[0][0]']     
+ rmalization)                                                                                     
+                                                                                                  
+ block_15_depthwise_relu (ReLU)  (None, 8, 8, 960)   0           ['block_15_depthwise_BN[0][0]']  
+                                                                                                  
+ block_15_project (Conv2D)      (None, 8, 8, 160)    153600      ['block_15_depthwise_relu[0][0]']
+                                                                                                  
+ block_15_project_BN (BatchNorm  (None, 8, 8, 160)   640         ['block_15_project[0][0]']       
+ alization)                                                                                       
+                                                                                                  
+ block_15_add (Add)             (None, 8, 8, 160)    0           ['block_14_add[0][0]',           
+                                                                  'block_15_project_BN[0][0]']    
+                                                                                                  
+ block_16_expand (Conv2D)       (None, 8, 8, 960)    153600      ['block_15_add[0][0]']           
+                                                                                                  
+ block_16_expand_BN (BatchNorma  (None, 8, 8, 960)   3840        ['block_16_expand[0][0]']        
+ lization)                                                                                        
+                                                                                                  
+ block_16_expand_relu (ReLU)    (None, 8, 8, 960)    0           ['block_16_expand_BN[0][0]']     
+                                                                                                  
+ block_16_depthwise (DepthwiseC  (None, 8, 8, 960)   8640        ['block_16_expand_relu[0][0]']   
+ onv2D)                                                                                           
+                                                                                                  
+ block_16_depthwise_BN (BatchNo  (None, 8, 8, 960)   3840        ['block_16_depthwise[0][0]']     
+ rmalization)                                                                                     
+                                                                                                  
+ block_16_depthwise_relu (ReLU)  (None, 8, 8, 960)   0           ['block_16_depthwise_BN[0][0]']  
+                                                                                                  
+ block_16_project (Conv2D)      (None, 8, 8, 320)    307200      ['block_16_depthwise_relu[0][0]']
+                                                                                                  
+ block_16_project_BN (BatchNorm  (None, 8, 8, 320)   1280        ['block_16_project[0][0]']       
+ alization)                                                                                       
+                                                                                                  
+ Conv_1 (Conv2D)                (None, 8, 8, 1280)   409600      ['block_16_project_BN[0][0]']    
+                                                                                                  
+ Conv_1_bn (BatchNormalization)  (None, 8, 8, 1280)  5120        ['Conv_1[0][0]']                 
+                                                                                                  
+ out_relu (ReLU)                (None, 8, 8, 1280)   0           ['Conv_1_bn[0][0]']              
+                                                                                                  
+ flatten (Flatten)              (None, 81920)        0           ['out_relu[0][0]']               
+                                                                                                  
+ dense (Dense)                  (None, 32)           2621472     ['flatten[0][0]']                
+                                                                                                  
+ dense_1 (Dense)                (None, 16)           528         ['dense[0][0]']                  
+                                                                                                  
+ dense_2 (Dense)                (None, 10)           170         ['dense_1[0][0]']                
+                                                                                                  
+==================================================================================================
+Total params: 4,880,154
+Trainable params: 2,622,170
+Non-trainable params: 2,257,984
+__________________________________________________________________________________________________
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">model_checkpoint</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">ModelCheckpoint</span><span class="p">(</span><span class="s1">'custom_model_checkpoint.hdf5'</span><span class="p">,</span> <span class="n">save_best_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">optim</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">categorical_crossentropy</span>
+<span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'acc'</span><span class="p">]</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="n">optim</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="n">loss</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">metrics</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/usr/local/lib/python3.7/dist-packages/keras/optimizer_v2/adam.py:105: UserWarning: The `lr` argument is deprecated, use `learning_rate` instead.
+  super(Adam, self).__init__(name, **kwargs)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">epochs</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_generator</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="n">valid_generator</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">model_checkpoint</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Epoch 1/15
+261/261 [==============================] - 82s 266ms/step - loss: 2.2156 - acc: 0.2387 - val_loss: 2.4666 - val_acc: 0.1926
+Epoch 2/15
+261/261 [==============================] - 69s 264ms/step - loss: 1.8806 - acc: 0.3507 - val_loss: 2.9997 - val_acc: 0.1998
+Epoch 3/15
+261/261 [==============================] - 69s 262ms/step - loss: 1.6801 - acc: 0.4238 - val_loss: 1.7140 - val_acc: 0.4189
+Epoch 4/15
+261/261 [==============================] - 68s 259ms/step - loss: 1.5152 - acc: 0.4849 - val_loss: 1.8728 - val_acc: 0.3630
+Epoch 5/15
+261/261 [==============================] - 68s 259ms/step - loss: 1.3800 - acc: 0.5317 - val_loss: 1.3740 - val_acc: 0.5542
+Epoch 6/15
+261/261 [==============================] - 67s 258ms/step - loss: 1.2810 - acc: 0.5651 - val_loss: 1.2696 - val_acc: 0.5773
+Epoch 7/15
+261/261 [==============================] - 68s 259ms/step - loss: 1.1394 - acc: 0.6090 - val_loss: 1.5016 - val_acc: 0.5132
+Epoch 8/15
+261/261 [==============================] - 68s 259ms/step - loss: 1.0545 - acc: 0.6457 - val_loss: 1.1030 - val_acc: 0.6264
+Epoch 9/15
+261/261 [==============================] - 67s 258ms/step - loss: 0.9492 - acc: 0.6842 - val_loss: 1.0740 - val_acc: 0.6625
+Epoch 10/15
+261/261 [==============================] - 67s 257ms/step - loss: 0.8704 - acc: 0.7103 - val_loss: 1.0892 - val_acc: 0.6635
+Epoch 11/15
+261/261 [==============================] - 67s 258ms/step - loss: 0.8059 - acc: 0.7376 - val_loss: 1.1381 - val_acc: 0.6548
+Epoch 12/15
+261/261 [==============================] - 67s 258ms/step - loss: 0.7596 - acc: 0.7534 - val_loss: 1.9603 - val_acc: 0.5209
+Epoch 13/15
+261/261 [==============================] - 67s 257ms/step - loss: 0.6964 - acc: 0.7755 - val_loss: 1.3278 - val_acc: 0.6452
+Epoch 14/15
+261/261 [==============================] - 67s 257ms/step - loss: 0.6342 - acc: 0.7952 - val_loss: 1.9896 - val_acc: 0.6177
+Epoch 15/15
+261/261 [==============================] - 67s 257ms/step - loss: 0.6035 - acc: 0.8018 - val_loss: 2.7954 - val_acc: 0.4015
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;keras.callbacks.History at 0x7f32425c28d0&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">'custom_model_checkpoint.hdf5'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">test_generator</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">ImageDataGenerator</span><span class="p">(</span><span class="n">rescale</span><span class="o">=</span><span class="mf">1.</span><span class="o">/</span><span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">flow_from_directory</span><span class="p">(</span>    
+    <span class="n">directory</span><span class="o">=</span><span class="n">testing_dir</span><span class="p">,</span>
+    <span class="n">target_size</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
+    <span class="n">classes</span><span class="o">=</span><span class="p">[</span><span class="s1">'.'</span><span class="p">],</span>
+    <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">88</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Found 3469 images belonging to 1 classes.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">test_preds</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_generator</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">test_preds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">test_preds</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>109/109 [==============================] - 20s 181ms/step
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">inverse_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">train_generator</span><span class="o">.</span><span class="n">class_indices</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<span class="n">test_preds</span> <span class="o">=</span> <span class="p">[</span><span class="n">inverse_map</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">test_preds</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">filenames</span> <span class="o">=</span> <span class="n">test_generator</span><span class="o">.</span><span class="n">filenames</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"image_id"</span><span class="p">:</span> <span class="n">filenames</span><span class="p">,</span> <span class="s2">"label"</span><span class="p">:</span> <span class="n">test_preds</span><span class="p">})</span>
+<span class="n">output</span><span class="o">.</span><span class="n">image_id</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">image_id</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'./'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
+<span class="n">output</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">"submission.csv"</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/usr/local/lib/python3.7/dist-packages/ipykernel_launcher.py:6: FutureWarning: The default value of regex will change from True to False in a future version.
+  
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">kaggle</span> <span class="n">competitions</span> <span class="n">submit</span> <span class="o">-</span><span class="n">c</span> <span class="n">paddy</span><span class="o">-</span><span class="n">disease</span><span class="o">-</span><span class="n">classification</span> <span class="o">-</span><span class="n">f</span> <span class="n">submission</span><span class="o">.</span><span class="n">csv</span> <span class="o">-</span><span class="n">m</span> <span class="s2">"Custom Model with best saved V2 Network, epochs=25"</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>100% 67.7k/67.7k [00:00&lt;00:00, 371kB/s]
+Successfully submitted to Paddy Doctor: Paddy Disease Classification</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Accuracy: 0.71</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="AnuragAnalog/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/paddy/plant/disease/classification/multi/class/kaggle/convolutional/neural/network/2022/05/12/Paddy-Doctor.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>My Jupyter Notebooks in the form of blog posts.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/AnuragAnalog" target="_blank" title="AnuragAnalog"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.instagram.com/anurag.peddi" target="_blank" title="anurag.peddi"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#instagram"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/peddi-anurag-01767a166" target="_blank" title="peddi-anurag-01767a166"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://twitter.com/anuragpeddi" target="_blank" title="anuragpeddi"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li><li><a rel="me" href="https://www.youtube.com/https%3A%2F%2Fwww.youtube.com%2Fchannel%2FUCUHlk_f7BJmmSxHxPjnkPkA" target="_blank" title="https://www.youtube.com/channel/UCUHlk_f7BJmmSxHxPjnkPkA"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#youtube"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
