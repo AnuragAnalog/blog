@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Goodreads Books Reviews | AnuragAnalog’s Notebooks</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Goodreads Books Reviews" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="NLP on Book Reviews" />
+<meta property="og:description" content="NLP on Book Reviews" />
+<link rel="canonical" href="https://anuraganalog.github.io/blog/kaggle/jupyter/community/data/science/competition/books/reviews/text/processing/2022/06/08/Goodreads-Books-Reviews.html" />
+<meta property="og:url" content="https://anuraganalog.github.io/blog/kaggle/jupyter/community/data/science/competition/books/reviews/text/processing/2022/06/08/Goodreads-Books-Reviews.html" />
+<meta property="og:site_name" content="AnuragAnalog’s Notebooks" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-06-08T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Goodreads Books Reviews" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-06-08T00:00:00-05:00","datePublished":"2022-06-08T00:00:00-05:00","description":"NLP on Book Reviews","headline":"Goodreads Books Reviews","mainEntityOfPage":{"@type":"WebPage","@id":"https://anuraganalog.github.io/blog/kaggle/jupyter/community/data/science/competition/books/reviews/text/processing/2022/06/08/Goodreads-Books-Reviews.html"},"url":"https://anuraganalog.github.io/blog/kaggle/jupyter/community/data/science/competition/books/reviews/text/processing/2022/06/08/Goodreads-Books-Reviews.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://anuraganalog.github.io/blog/feed.xml" title="AnuragAnalog's Notebooks" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YHQ9QB159E"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YHQ9QB159E');
+</script>
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">AnuragAnalog&#39;s Notebooks</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Goodreads Books Reviews</h1><p class="page-description">NLP on Book Reviews</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-06-08T00:00:00-05:00" itemprop="datePublished">
+        Jun 8, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      5 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#kaggle">kaggle</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#jupyter">jupyter</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#community">community</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#data">data</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#science">science</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#competition">competition</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#books">books</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#reviews">reviews</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#text">text</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#processing">processing</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/AnuragAnalog/blog/tree/master/_notebooks/2022-06-08-Goodreads-Books-Reviews.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/AnuragAnalog/blog/master?filepath=_notebooks%2F2022-06-08-Goodreads-Books-Reviews.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/AnuragAnalog/blog/blob/master/_notebooks/2022-06-08-Goodreads-Books-Reviews.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2FAnuragAnalog%2Fblog%2Fblob%2Fmaster%2F_notebooks%2F2022-06-08-Goodreads-Books-Reviews.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/blog/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#Loading-the-data">Loading the data </a></li>
+<li class="toc-entry toc-h2"><a href="#Exploratory-Data-Analysis">Exploratory Data Analysis </a></li>
+<li class="toc-entry toc-h2"><a href="#Feature-Engineering">Feature Engineering </a></li>
+<li class="toc-entry toc-h2"><a href="#Modelling">Modelling </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022-06-08-Goodreads-Books-Reviews.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">pip3</span> <span class="n">install</span> <span class="n">category_encoders</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Looking in indexes: https://pypi.org/simple, https://us-python.pkg.dev/colab-wheels/public/simple/
+Requirement already satisfied: category_encoders in /usr/local/lib/python3.7/dist-packages (2.5.0)
+Requirement already satisfied: pandas&gt;=1.0.5 in /usr/local/lib/python3.7/dist-packages (from category_encoders) (1.3.5)
+Requirement already satisfied: patsy&gt;=0.5.1 in /usr/local/lib/python3.7/dist-packages (from category_encoders) (0.5.2)
+Requirement already satisfied: scipy&gt;=1.0.0 in /usr/local/lib/python3.7/dist-packages (from category_encoders) (1.4.1)
+Requirement already satisfied: scikit-learn&gt;=0.20.0 in /usr/local/lib/python3.7/dist-packages (from category_encoders) (1.0.2)
+Requirement already satisfied: statsmodels&gt;=0.9.0 in /usr/local/lib/python3.7/dist-packages (from category_encoders) (0.10.2)
+Requirement already satisfied: numpy&gt;=1.14.0 in /usr/local/lib/python3.7/dist-packages (from category_encoders) (1.21.6)
+Requirement already satisfied: python-dateutil&gt;=2.7.3 in /usr/local/lib/python3.7/dist-packages (from pandas&gt;=1.0.5-&gt;category_encoders) (2.8.2)
+Requirement already satisfied: pytz&gt;=2017.3 in /usr/local/lib/python3.7/dist-packages (from pandas&gt;=1.0.5-&gt;category_encoders) (2022.1)
+Requirement already satisfied: six in /usr/local/lib/python3.7/dist-packages (from patsy&gt;=0.5.1-&gt;category_encoders) (1.15.0)
+Requirement already satisfied: threadpoolctl&gt;=2.0.0 in /usr/local/lib/python3.7/dist-packages (from scikit-learn&gt;=0.20.0-&gt;category_encoders) (3.1.0)
+Requirement already satisfied: joblib&gt;=0.11 in /usr/local/lib/python3.7/dist-packages (from scikit-learn&gt;=0.20.0-&gt;category_encoders) (1.1.0)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">category_encoders</span> <span class="k">as</span> <span class="nn">ce</span>
+
+<span class="kn">from</span> <span class="nn">zipfile</span> <span class="kn">import</span> <span class="n">ZipFile</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/usr/local/lib/python3.7/dist-packages/statsmodels/tools/_testing.py:19: FutureWarning: pandas.util.testing is deprecated. Use the functions in the public API at pandas.testing instead.
+  import pandas.util.testing as tm
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">'figure.figsize'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">mkdir</span> <span class="o">~/.</span><span class="n">kaggle</span>
+<span class="err">!</span><span class="n">cp</span> <span class="n">kaggle</span><span class="o">.</span><span class="n">json</span> <span class="o">~/.</span><span class="n">kaggle</span><span class="o">/</span>
+<span class="err">!</span><span class="n">chmod</span> <span class="mi">600</span> <span class="o">~/.</span><span class="n">kaggle</span><span class="o">/</span><span class="n">kaggle</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>mkdir: cannot create directory ‘/root/.kaggle’: File exists
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">kaggle</span> <span class="n">competitions</span> <span class="n">download</span> <span class="o">-</span><span class="n">c</span> <span class="n">goodreads</span><span class="o">-</span><span class="n">books</span><span class="o">-</span><span class="n">reviews</span><span class="o">-</span><span class="mi">290312</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Downloading goodreads-books-reviews-290312.zip to /content
+ 98% 625M/635M [00:25&lt;00:00, 43.9MB/s]
+100% 635M/635M [00:25&lt;00:00, 26.6MB/s]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">with</span> <span class="n">ZipFile</span><span class="p">(</span><span class="s1">'/content/goodreads-books-reviews-290312.zip'</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">zf</span><span class="p">:</span>
+    <span class="n">zf</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="s1">'./'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">target_col</span> <span class="o">=</span> <span class="s1">'rating'</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Loading-the-data">
+<a class="anchor" href="#Loading-the-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Loading the data<a class="anchor-link" href="#Loading-the-data"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'/content/goodreads_train.csv'</span><span class="p">)</span>
+<span class="n">train</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+  <div id="df-4d12b8f1-bd62-404b-9c0d-fec49aa36d97">
+    <div class="colab-df-container">
+      <div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>user_id</th>
+      <th>book_id</th>
+      <th>review_id</th>
+      <th>rating</th>
+      <th>review_text</th>
+      <th>date_added</th>
+      <th>date_updated</th>
+      <th>read_at</th>
+      <th>started_at</th>
+      <th>n_votes</th>
+      <th>n_comments</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>8842281e1d1347389f2ab93d60773d4d</td>
+      <td>18245960</td>
+      <td>dfdbb7b0eb5a7e4c26d59a937e2e5feb</td>
+      <td>5</td>
+      <td>This is a special book. It started slow for ab...</td>
+      <td>Sun Jul 30 07:44:10 -0700 2017</td>
+      <td>Wed Aug 30 00:00:26 -0700 2017</td>
+      <td>Sat Aug 26 12:05:52 -0700 2017</td>
+      <td>Tue Aug 15 13:23:18 -0700 2017</td>
+      <td>28</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>8842281e1d1347389f2ab93d60773d4d</td>
+      <td>16981</td>
+      <td>a5d2c3628987712d0e05c4f90798eb67</td>
+      <td>3</td>
+      <td>Recommended by Don Katz. Avail for free in Dec...</td>
+      <td>Mon Dec 05 10:46:44 -0800 2016</td>
+      <td>Wed Mar 22 11:37:04 -0700 2017</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>8842281e1d1347389f2ab93d60773d4d</td>
+      <td>28684704</td>
+      <td>2ede853b14dc4583f96cf5d120af636f</td>
+      <td>3</td>
+      <td>A fun, fast paced science fiction thriller. I ...</td>
+      <td>Tue Nov 15 11:29:22 -0800 2016</td>
+      <td>Mon Mar 20 23:40:27 -0700 2017</td>
+      <td>Sat Mar 18 23:22:42 -0700 2017</td>
+      <td>Fri Mar 17 23:45:40 -0700 2017</td>
+      <td>22</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>8842281e1d1347389f2ab93d60773d4d</td>
+      <td>27161156</td>
+      <td>ced5675e55cd9d38a524743f5c40996e</td>
+      <td>0</td>
+      <td>Recommended reading to understand what is goin...</td>
+      <td>Wed Nov 09 17:37:04 -0800 2016</td>
+      <td>Wed Nov 09 17:38:20 -0800 2016</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>8842281e1d1347389f2ab93d60773d4d</td>
+      <td>25884323</td>
+      <td>332732725863131279a8e345b63ac33e</td>
+      <td>4</td>
+      <td>I really enjoyed this book, and there is a lot...</td>
+      <td>Mon Apr 25 09:31:23 -0700 2016</td>
+      <td>Mon Apr 25 09:31:23 -0700 2016</td>
+      <td>Sun Jun 26 00:00:00 -0700 2016</td>
+      <td>Sat May 28 00:00:00 -0700 2016</td>
+      <td>9</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-4d12b8f1-bd62-404b-9c0d-fec49aa36d97')" title="Convert this dataframe to an interactive table." style="display:none;">
+        
+  &lt;svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px"&gt;
+    <path d="M0 0h24v24H0V0z" fill="none"></path>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"></path><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"></path>
+  &lt;/svg&gt;
+      </button>
+      
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-4d12b8f1-bd62-404b-9c0d-fec49aa36d97 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-4d12b8f1-bd62-404b-9c0d-fec49aa36d97');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+  
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'/content/goodreads_test.csv'</span><span class="p">)</span>
+<span class="n">test</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+  <div id="df-57369280-c6e6-448d-b62e-7493573d46d2">
+    <div class="colab-df-container">
+      <div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>user_id</th>
+      <th>book_id</th>
+      <th>review_id</th>
+      <th>review_text</th>
+      <th>date_added</th>
+      <th>date_updated</th>
+      <th>read_at</th>
+      <th>started_at</th>
+      <th>n_votes</th>
+      <th>n_comments</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>b9450d1c1f97f891c392b1105959b56e</td>
+      <td>7092507</td>
+      <td>5c4df7e70e9b438c761f07a4620ccb7c</td>
+      <td>** spoiler alert ** \n This is definitely one ...</td>
+      <td>Sat Nov 10 06:06:13 -0800 2012</td>
+      <td>Sun Nov 11 05:38:36 -0800 2012</td>
+      <td>Sun Nov 11 05:38:36 -0800 2012</td>
+      <td>Sat Nov 10 00:00:00 -0800 2012</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>b9450d1c1f97f891c392b1105959b56e</td>
+      <td>5576654</td>
+      <td>8eaeaf13213eeb16ad879a2a2591bbe5</td>
+      <td>** spoiler alert ** \n "You are what you drink...</td>
+      <td>Fri Nov 09 21:55:16 -0800 2012</td>
+      <td>Sat Nov 10 05:41:49 -0800 2012</td>
+      <td>Sat Nov 10 05:41:49 -0800 2012</td>
+      <td>Fri Nov 09 00:00:00 -0800 2012</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>b9450d1c1f97f891c392b1105959b56e</td>
+      <td>15754052</td>
+      <td>dce649b733c153ba5363a0413cac988f</td>
+      <td>Roar is one of my favorite characters in Under...</td>
+      <td>Fri Nov 09 00:25:50 -0800 2012</td>
+      <td>Sat Nov 10 06:14:10 -0800 2012</td>
+      <td>Sat Nov 10 06:14:10 -0800 2012</td>
+      <td>Fri Nov 09 00:00:00 -0800 2012</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>b9450d1c1f97f891c392b1105959b56e</td>
+      <td>17020</td>
+      <td>8a46df0bb997269d6834f9437a4b0a77</td>
+      <td>** spoiler alert ** \n If you feel like travel...</td>
+      <td>Thu Nov 01 00:28:39 -0700 2012</td>
+      <td>Sat Nov 03 11:35:22 -0700 2012</td>
+      <td>Sat Nov 03 11:35:22 -0700 2012</td>
+      <td>Thu Nov 01 00:00:00 -0700 2012</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>b9450d1c1f97f891c392b1105959b56e</td>
+      <td>12551082</td>
+      <td>d11d3091e22f1cf3cb865598de197599</td>
+      <td>3.5 stars \n I read and enjoyed the first two ...</td>
+      <td>Thu Oct 18 00:57:00 -0700 2012</td>
+      <td>Mon Apr 01 23:00:51 -0700 2013</td>
+      <td>Sat Mar 30 00:00:00 -0700 2013</td>
+      <td>Fri Mar 29 00:00:00 -0700 2013</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-57369280-c6e6-448d-b62e-7493573d46d2')" title="Convert this dataframe to an interactive table." style="display:none;">
+        
+  &lt;svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px"&gt;
+    <path d="M0 0h24v24H0V0z" fill="none"></path>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"></path><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"></path>
+  &lt;/svg&gt;
+      </button>
+      
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-57369280-c6e6-448d-b62e-7493573d46d2 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-57369280-c6e6-448d-b62e-7493573d46d2');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+  
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exploratory-Data-Analysis">
+<a class="anchor" href="#Exploratory-Data-Analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Exploratory Data Analysis<a class="anchor-link" href="#Exploratory-Data-Analysis"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">train</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="n">train</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 900000 entries, 0 to 899999
+Data columns (total 11 columns):
+ #   Column        Non-Null Count   Dtype 
+---  ------        --------------   ----- 
+ 0   user_id       900000 non-null  object
+ 1   book_id       900000 non-null  int64 
+ 2   review_id     900000 non-null  object
+ 3   rating        900000 non-null  int64 
+ 4   review_text   900000 non-null  object
+ 5   date_added    900000 non-null  object
+ 6   date_updated  900000 non-null  object
+ 7   read_at       808234 non-null  object
+ 8   started_at    625703 non-null  object
+ 9   n_votes       900000 non-null  int64 
+ 10  n_comments    900000 non-null  int64 
+dtypes: int64(4), object(7)
+memory usage: 75.5+ MB
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+  <div id="df-bfe94de4-b9f9-462a-9401-21f23b07fb8b">
+    <div class="colab-df-container">
+      <div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>book_id</th>
+      <th>rating</th>
+      <th>n_votes</th>
+      <th>n_comments</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>9.000000e+05</td>
+      <td>900000.000000</td>
+      <td>900000.000000</td>
+      <td>900000.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>1.344145e+07</td>
+      <td>3.689639</td>
+      <td>3.294381</td>
+      <td>1.016656</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>9.357863e+06</td>
+      <td>1.252583</td>
+      <td>17.873553</td>
+      <td>5.963821</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>1.000000e+00</td>
+      <td>0.000000</td>
+      <td>-3.000000</td>
+      <td>-1.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>6.340471e+06</td>
+      <td>3.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>1.344203e+07</td>
+      <td>4.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>2.057897e+07</td>
+      <td>5.000000</td>
+      <td>2.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>3.632868e+07</td>
+      <td>5.000000</td>
+      <td>3222.000000</td>
+      <td>1335.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-bfe94de4-b9f9-462a-9401-21f23b07fb8b')" title="Convert this dataframe to an interactive table." style="display:none;">
+        
+  &lt;svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px"&gt;
+    <path d="M0 0h24v24H0V0z" fill="none"></path>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"></path><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"></path>
+  &lt;/svg&gt;
+      </button>
+      
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-bfe94de4-b9f9-462a-9401-21f23b07fb8b button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-bfe94de4-b9f9-462a-9401-21f23b07fb8b');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+  
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'RdYlGn'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f10137b9890&gt;</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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">
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">'rating'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">train</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f105f0dca10&gt;</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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">
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Feature-Engineering">
+<a class="anchor" href="#Feature-Engineering" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feature Engineering<a class="anchor-link" href="#Feature-Engineering"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The distributions of <code>n_votes</code> and <code>n_comments</code> columns are right skewed(highly). So let's do a log transformation to spread it across a larger range, which makes it more comfortable for a machine learning algorithm to extract pattern from it.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">train</span><span class="p">[</span><span class="s1">'n_votes_log'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s1">'n_votes'</span><span class="p">]</span><span class="o">+</span><span class="mf">0.01</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">test</span><span class="p">[</span><span class="s1">'n_votes_log'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s1">'n_votes'</span><span class="p">]</span><span class="o">+</span><span class="mf">0.01</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">train</span><span class="p">[</span><span class="s1">'n_comments_log'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s1">'n_comments'</span><span class="p">]</span><span class="o">+</span><span class="mf">0.01</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">test</span><span class="p">[</span><span class="s1">'n_comments_log'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s1">'n_comments'</span><span class="p">]</span><span class="o">+</span><span class="mf">0.01</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/usr/local/lib/python3.7/dist-packages/pandas/core/arraylike.py:364: RuntimeWarning: invalid value encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">cat_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'book_id'</span><span class="p">,</span> <span class="s1">'user_id'</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cat_cols</span><span class="p">:</span>
+    <span class="n">encoder</span> <span class="o">=</span> <span class="n">ce</span><span class="o">.</span><span class="n">cat_boost</span><span class="o">.</span><span class="n">CatBoostEncoder</span><span class="p">()</span>
+
+    <span class="n">encoder</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'object'</span><span class="p">),</span> <span class="n">train</span><span class="p">[</span><span class="n">target_col</span><span class="p">])</span>
+    <span class="n">train</span><span class="p">[</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">_encode"</span><span class="p">]</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="n">col</span><span class="p">])</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">_encode"</span><span class="p">]</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="n">col</span><span class="p">])</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">if</span> <span class="n">train</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+    <span class="n">missing_cols</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">train</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Columns which contains missing values are </span><span class="si">{</span><span class="n">missing_cols</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="n">missing_cols</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"No Missing Values"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Columns which contains missing values are ['read_at', 'started_at']
+read_at       0.101962
+started_at    0.304774
+dtype: float64
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Modelling">
+<a class="anchor" href="#Modelling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modelling<a class="anchor-link" href="#Modelling"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">cols2</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"n_votes_log"</span><span class="p">,</span> <span class="s2">"n_comments_log"</span><span class="p">,</span> <span class="s2">"n_votes"</span><span class="p">,</span> <span class="s2">"n_comments"</span><span class="p">,</span> <span class="s2">"book_id_encode"</span><span class="p">,</span> <span class="s2">"user_id_encode"</span><span class="p">]</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="n">cols2</span><span class="p">],</span> <span class="n">train</span><span class="p">[</span><span class="n">target_col</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>DecisionTreeClassifier()</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">test_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="n">cols2</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Training Accuracy: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="n">cols2</span><span class="p">],</span> <span class="n">train</span><span class="p">[</span><span class="s1">'rating'</span><span class="p">])</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Training Accuracy: 0.9941722222222222
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">submission</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'/content/goodreads_sample_submission.csv'</span><span class="p">)</span>
+<span class="n">submission</span><span class="p">[</span><span class="s1">'rating'</span><span class="p">]</span> <span class="o">=</span> <span class="n">test_pred</span>
+<span class="n">submission</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'output.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">kaggle</span> <span class="n">competitions</span> <span class="n">submit</span> <span class="o">-</span><span class="n">c</span> <span class="n">goodreads</span><span class="o">-</span><span class="n">books</span><span class="o">-</span><span class="n">reviews</span><span class="o">-</span><span class="mi">290312</span> <span class="o">-</span><span class="n">f</span> <span class="n">output</span><span class="o">.</span><span class="n">csv</span> <span class="o">-</span><span class="n">m</span> <span class="s2">"dt"</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>100% 16.0M/16.0M [00:08&lt;00:00, 1.88MB/s]
+Successfully submitted to Goodreads Books Reviews</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="AnuragAnalog/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/kaggle/jupyter/community/data/science/competition/books/reviews/text/processing/2022/06/08/Goodreads-Books-Reviews.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>My Jupyter Notebooks in the form of blog posts.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/AnuragAnalog" target="_blank" title="AnuragAnalog"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.instagram.com/anurag.peddi" target="_blank" title="anurag.peddi"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#instagram"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/peddi-anurag-01767a166" target="_blank" title="peddi-anurag-01767a166"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://twitter.com/anuragpeddi" target="_blank" title="anuragpeddi"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li><li><a rel="me" href="https://www.youtube.com/https%3A%2F%2Fwww.youtube.com%2Fchannel%2FUCUHlk_f7BJmmSxHxPjnkPkA" target="_blank" title="https://www.youtube.com/channel/UCUHlk_f7BJmmSxHxPjnkPkA"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#youtube"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
