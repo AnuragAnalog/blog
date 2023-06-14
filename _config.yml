@@ -39,12 +39,12 @@ baseurl: "/blog" # the subpath of your site, e.g. "/blog".
 # Github and twitter are optional:
 minima:
   social_links:
-    twitter: anuragpeddi
-    github: AnuragAnalog
-    instagram: anurag.peddi
-    linkedin: peddi-anurag-01767a166
-    kaggle: anurag1817
-    youtube: https://www.youtube.com/channel/UCUHlk_f7BJmmSxHxPjnkPkA
+      github: AnuragAnalog
+#     twitter: anuragpeddi
+#     instagram: anurag.peddi
+#     linkedin: peddi-anurag-01767a166
+#     kaggle: anurag1817
+#     youtube: https://www.youtube.com/channel/UCUHlk_f7BJmmSxHxPjnkPkA
 
 # Set this to true to get LaTeX math equation support
 use_math: 
