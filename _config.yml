@@ -39,8 +39,8 @@ baseurl: "/blog" # the subpath of your site, e.g. "/blog".
 # Github and twitter are optional:
 minima:
   social_links:
-    github_username: AnuragAnalog
-    twitter_username: anuragpeddi
+#     github_username: AnuragAnalog
+#     twitter_username: anuragpeddi
 #     instagram: anurag.peddi
 #     linkedin: peddi-anurag-01767a166
 #     kaggle: anurag1817
