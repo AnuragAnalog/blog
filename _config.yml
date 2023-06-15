@@ -9,7 +9,7 @@
 title: AnuragAnalog's Notebooks
 description: My Jupyter Notebooks in the form of blog posts.
 github_username: AnuragAnalog
-# you can comment the below line out if your repo name is not different than your baseurl
+# You can comment the below line out if your repo name is not different than your baseurl
 github_repo: "blog"
 
 # OPTIONAL: override baseurl and url if using a custom domain
@@ -23,26 +23,24 @@ url: "https://AnuragAnalog.github.io" # the base hostname & protocol for your si
 #    -  if you are not using a custom domain, the baseurl *must* be set to your repo name
 # 
 ####  Scenario Two: If you have a Custom Domain #####
-# 1. If your domain does NOT have a subpath, this leave this value as ""
-# 2. If your domain does have a subpath, you must preceed the value with a / and NOT have a / at the end.  
+# 1. If your domain does NOT have a subpath, leave this value as ""
+# 2. If your domain does have a subpath, you must precede the value with a / and NOT have a / at the end.  
 #      For example: 
 #           "" is valid
 #           "/blog"        is valid
 #            "/blog/site/" is invalid  ( / at the end)
 #            "/blog/site"  is valid
-#            "blog/site"   is invalid  ( because doesn't begin with a /)
+#            "blog/site"   is invalid  ( because it doesn't begin with a /)
 #
 # 3. You must replace the parameter `baseurl` in _action_files/settings.ini with the same value as you set here but WITHOUT QUOTES.
 #
 baseurl: "/blog" # the subpath of your site, e.g. "/blog".
 
-# Github and twitter are optional:
+# Github and Twitter are optional:
 minima:
   social_links:
-    - { platform: github,  user_url: "https://github.com/jekyll/jekyll" }
-    - { platform: twitter, user_url: "https://twitter.com/jekyllrb" }
-#     github_username: AnuragAnalog
-#     twitter_username: anuragpeddi
+    - { platform: github,  user_url: "https://github.com/AnuragAnalog" }
+    - { platform: twitter, user_url: "https://twitter.com/anuragpeddi" }
 #     instagram: anurag.peddi
 #     linkedin: peddi-anurag-01767a166
 #     kaggle: anurag1817
@@ -54,7 +52,7 @@ use_math:
 # Set this to true to display the summary of your blog post under your title on the Home page.
 show_description: true
 
-# Set this to true to display image previews on home page, if they exist
+# Set this to true to display image previews on the home page, if they exist
 show_image: true
 
 # Set this to true to turn on annotations with hypothes.is (https://web.hypothes.is/)
@@ -71,7 +69,7 @@ exclude:
   - action.yml
   - Makefile
 
-# this setting allows you to keep pages organized in the _pages folder
+# This setting allows you to keep pages organized in the _pages folder
 include:
   - _pages
 
@@ -123,7 +121,7 @@ kramdown:
   hard_wrap: false
   syntax_highlighter: rouge
 
-# to limit size of xml as it can grow quite large.
+# to limit the size of XML as it can grow quite large.
 feed:
   posts_limit: 5 #default posts_limit: 10
   excerpt_only: true
