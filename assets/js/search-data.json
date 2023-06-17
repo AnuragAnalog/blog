@@ -2,7 +2,7 @@
   
     
         "post0": {
-            "title": "Contanerize a Python Application",
+            "title": "Containerize a Python Application",
             "content": "We will create a script that will print a &quot;Hello World!&quot; message. And a numpy array, which contains some random numbers. . Requirements file . The first step in this process is to create a requirements.txt file. This file will contain all the dependencies that our application needs to run. In this case, we will only need numpy. . numpy==1.19.5 . Python Script . Now, create a python script called main.py with the following content: . #!/usr/bin/python3 import numpy as np print(&quot;Hello World!&quot;) print(f&quot;This is a test with numpy: {np.array([1,2,3])}&quot;) . Dockerfile . Now define, a Dockerfile with the following content: . FROM python:3 ADD requirements.txt / RUN pip install -r requirements.txt ADD main.py / CMD [&quot;python&quot;, &quot;main.py&quot;] . Build the Image . Now, you have to create a docker image with the following command: . docker build -t anuraganalog/pytest:latest . Run the Image . Now, you can run the image with the following command: . docker run anuraganalog/pytest:latest .",
             "url": "https://anuraganalog.github.io/blog/docker/python/container/2023/06/14/Docker-with-Python.html",
             "relUrl": "/docker/python/container/2023/06/14/Docker-with-Python.html",
