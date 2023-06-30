@@ -8,7 +8,7 @@ https://AnuragAnalog.github.io/blog/
 
 # My Blog
 
-I am an Undergrad'22, who is passionate and curious about Data Science and Machine Learning.
+I am a Grad'24, who is passionate and curious about Data Science and Machine Learning.
 You can find more about me at [https://AnuragAnalog.github.io/](https://AnuragAnalog.github.io/)
 
 _powered by [fastpages](https://github.com/fastai/fastpages)_
